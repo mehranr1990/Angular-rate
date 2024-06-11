@@ -1,1 +1,18 @@
-<p>table-coins works!</p>
+<p-table [value]="coins" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Buy Price</th>
+            <th>Sell Price</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{ product.name }}</td>
+            <td><img [src]="product.image" [alt]="product.name" width="50" class="shadow-4" /></td>
+            <td>{{ product.buyprice }}</td>
+            <td>{{ product.sellprice }}</td>
+        </tr>
+    </ng-template>
+</p-table>
