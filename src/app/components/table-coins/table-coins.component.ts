@@ -16,7 +16,7 @@ export class TableCoinsComponent  {
   coins:Coin[]=[]
   
   ngOnInit(): void {
-    this.coins =this.coinsService.get()
+    this.coins =this.coinsService.getAll()
   }
   
   }

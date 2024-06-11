@@ -21,7 +21,7 @@ export class CoinTableRateExchangeComponent {
   expandedRows = {};
 
   ngOnInit(): void {
-    this.coins =this.coinsService.get()
+    this.coins =this.coinsService.getAll()
   }
 
   onRowExpand(event: TableRowExpandEvent) {}

@@ -46,17 +46,17 @@ export class LocalstorageDBService {
     const coinRateFromLocalStorageList: coinRateforsave[] = JSON.parse(
       localStorage.getItem('coins-rate')!
     );
+    console.log(coinRateFromLocalStorageList);
+
     const coins: Coin[] = this.getCoins();
+    console.log(coins);
+
     const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
       (coinRate) => {
         return {
           id: coinRate.id,
-          fromCoin: coins.find((coin) => {
-            coin.id === coinRate.fromCoinId;
-          })!,
-          toCoin: coins.find((coin) => {
-            coin.id === coinRate.toCoinId;
-          })!,
+          fromCoin: coins.find((coin) => coin.id === coinRate.fromCoinId)!,
+          toCoin: coins.find((coin) => coin.id === coinRate.toCoinId)!,
           rate: coinRate.rate,
           israte: coinRate.isRate,
         };

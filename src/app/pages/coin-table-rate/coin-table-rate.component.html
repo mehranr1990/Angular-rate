@@ -1,22 +1,39 @@
 <div class="p-8">
-    
-    <p-table [value]="coins" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="coins" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Buy Price</th>
+                <th>Sell Price</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-coinRate>
+            <tr>
+                <td><img [src]="coinRate.fromCoin.image" [alt]="coinRate.name" width="50" class="shadow-4" />{{ coinRate.fromCoin.name }}</td>
+                <td><img [src]="coinRate.toCoin.image" [alt]="coinRate.name" width="50" class="shadow-4" />{{ coinRate.toCoin.name }}</td>
+                <td>{{ coinRate.rate }}</td>
+                <td>{{ coinRate.isRate }}</td> 
+            </tr>
+        </ng-template>
+    </p-table>
+    <!-- <p-table [value]="coins" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="code" style="width:25%">
-                    Code <p-sortIcon field="code" />
+                    Name <p-sortIcon field="code" />
                 </th>
                 <th pSortableColumn="name" style="width:25%">
                     Name <p-sortIcon field="name" />
                 </th>
                 <th pSortableColumn="category" style="width:25%">
-                    Quantity <p-sortIcon field="quantity" />
+                    Rate <p-sortIcon field="quantity" />
                 </th>
                 <th pSortableColumn="quantity" style="width:25%">
-                    Price <p-sortIcon field="price" />
+                    isRate <p-sortIcon field="price" />
                 </th>
-            </tr>
-            <tr>
+            </tr> -->
+            <!-- <tr>
                 <th>
                     <p-columnFilter type="text" field="code" [showClearButton]="false" />
                 </th>
@@ -29,45 +46,50 @@
                 <th>
                     <p-columnFilter type="text" field="price" [showClearButton]="false" />
                 </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product let-editing="editing">
-            <tr>
-                <td [pEditableColumn]="product.code" pEditableColumnField="code">
+            </tr> -->
+        <!-- </ng-template>
+        <ng-template pTemplate="body" let-coinRate let-editing="editing">
+            <td><img [src]="coinRate.fromCoin.image" [alt]="coinRate.name" width="50" class="shadow-4" />{{ coinRate.fromCoin.name }}</td>
+            <td><img [src]="coinRate.toCoin.image" [alt]="coinRate.name" width="50" class="shadow-4" />{{ coinRate.toCoin.name }}</td>
+            <td>{{ coinRate.rate }}</td>
+            <td>{{ coinRate.isRate }}</td> -->
+            <!-- <tr>
+                <td [pEditableColumn]="coinRate.code" pEditableColumnField="code">
                     <p-cellEditor>
                         <ng-template pTemplate="output">
-                            {{ product.code }}
+                            {{ coinRate.fromCoin.name }}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td [pEditableColumn]="product.name" pEditableColumnField="name">
+                <td [pEditableColumn]="coinRate.name" pEditableColumnField="name">
                     <p-cellEditor>
                         <ng-template pTemplate="output">
-                            {{ product.name }}
+                            {{ coinRate.toCoin.name }}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td [pEditableColumn]="product.quantity" pEditableColumnField="quantity">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <!-- <input pInputText [(ngModel)]="product.quantity" (keydown.enter)="onEdit($event)" /> -->
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{ product.quantity }}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td [pEditableColumn]="product.price" pEditableColumnField="price">
+                <td [pEditableColumn]="coinRate.quantity" pEditableColumnField="quantity">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <!-- <input pInputText type="text" [(ngModel)]="product.price" (keydown.enter)="onEdit($event)" /> -->
+                            <input pInputText [(ngModel)]="coinRate.quantity" (keydown.enter)="onEdit($event)" />
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{ product.price}}
+                            {{ coinRate.quantity }}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-            </tr>
-        </ng-template>
-    </p-table>
+                <td [pEditableColumn]="coinRate.price" pEditableColumnField="price">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="coinRate.price" (keydown.enter)="onEdit($event)" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ coinRate.price}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr> -->
+        <!-- </ng-template>
+    </p-table> -->
+    <p-button (click)="toggleDialog()" label="Add Coin" />
 </div>

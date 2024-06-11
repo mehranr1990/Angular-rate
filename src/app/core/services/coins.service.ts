@@ -30,7 +30,7 @@ export class CoinsService {
     this.localStorageService.addCoin(newCoin);
     return this._coins;
   }
-  public get(){
+  public getAll(){
      this._coins = this.localStorageService.getCoins()
      
      return this._coins
