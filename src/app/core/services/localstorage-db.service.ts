@@ -19,6 +19,9 @@ export class LocalstorageDBService {
     const coins: Coin[] = [...this.getCoins(), coin];
     localStorage.setItem('coins', JSON.stringify(coins));
   }
+  public UpdateCoin(coins:Coin[]){
+    localStorage.setItem('coins', JSON.stringify(coins));
+  }
 
   public getCoins() {
     if (localStorage.getItem('coins')) {
@@ -46,11 +49,7 @@ export class LocalstorageDBService {
     const coinRateFromLocalStorageList: coinRateforsave[] = JSON.parse(
       localStorage.getItem('coins-rate')!
     );
-    console.log(coinRateFromLocalStorageList);
-
     const coins: Coin[] = this.getCoins();
-    console.log(coins);
-
     const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
       (coinRate) => {
         return {

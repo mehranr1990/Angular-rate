@@ -32,7 +32,6 @@ export class CoinsService {
   }
   public getAll(){
      this._coins = this.localStorageService.getCoins()
-     
      return this._coins
   }
   public update(id: string, buyprice: number, sellprice: number) {
@@ -42,13 +41,7 @@ export class CoinsService {
     if (selectedCoin) {
       selectedCoin.buyprice = buyprice;
       selectedCoin.sellprice = sellprice;
-      // this._coins = [...this._coins, selectedCoin];
     }
-    // this._coins.filter((coin) => {
-    //   if (coin.id === id) {
-    //     coin.buyprice = buyprice;
-    //     coin.sellprice = sellprice;
-    //   }
-    // });
+    this.localStorageService.UpdateCoin(this._coins)
   }
 }

@@ -1,65 +1,160 @@
 <div class="p-8">
-    <p-table [value]="coins" [tableStyle]="{ 'min-width': '50rem' }" dataKey="id" [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand($event)" (onRowCollapse)="onRowCollapse($event)">
-        <ng-template pTemplate="header">
-        
-        <!-- مواردی که در صفحه اصلی هستند و باز میشوند -->
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Buy Price</th>
-                <th>Sell Price</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product let-expanded="expanded">
-            <tr>
-                <td>
-                    <p-button type="button" pRipple [pRowToggler]="product" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
-                </td>
-                <td>{{ product.name }}</td>
-                <td><img [src]="product.image" [alt]="product.name" width="50" class="shadow-4" /></td>
-                <td>{{ product.buyprice }}</td>
-                <td>{{ product.sellprice }}</td>
+  <div class="flex">
+    @for (item of coins; track $index) {
+    <p-card [header]="coins[$index].name" [style]="{ width: '360px' }">
+      <ng-template pTemplate="header">
+        <img alt="Card" [src]="coins[$index].image" />
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div>
+          <label for="">Amount : </label>
+          <p-inputNumber inputId="integeronly" [(ngModel)]="amountInput" />
+        </div>
+        <div>
+          <label for="">Buy Price : </label>
+          <input
+            pInputText
+            [value]="coins[$index].buyprice"
+            (change)="buyInputChenge($event, coins[$index])"
+          />
+        </div>
+        <div>
+          <label for="">Sell Price : </label>
+          <input
+            pInputText
+            [value]="coins[$index].sellprice"
+            (change)="sellInputChenge($event, coins[$index])"
+          />
+        </div>
+        <div class="flex gap-3 mt-1">
+          <p-button
+            label="Cancel"
+            severity="secondary"
+            class="w-full"
+            styleClass="w-full"
+          />
+          <p-button label="Save" class="w-full" styleClass="w-full" />
+        </div>
+      </ng-template>
+    </p-card>
 
-            </tr>
-        </ng-template>
-        
-        <!-- مواردی که بعد از کلیک کردن نمایش داده میشوند-->
-        <ng-template pTemplate="rowexpansion" >
-            <tr>
-                <td colspan="7">
-                    <div class="p-3">
-                        <p-table [value]="coins" dataKey="id">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Buy Price</th>
-                                    <th>Sell Price</th>
-                                    <th></th>
-                                    <th style="width: 4rem"></th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-product>
-                                <tr>
-                                    <td>{{ product.name }}</td>
-                                    <td><img [src]="product.image" [alt]="product.name" width="50" class="shadow-4" /></td>
-                                    <td>{{ product.buyprice }}</td>
-                                    <td>{{ product.sellprice }}</td>
-                                    <td>
-                                    </td>
-                                    <td><p-button type="button" icon="pi pi-search" /></td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td colspan="6">There are no order for this product yet.</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+    }
+  </div>
+  <br />
+
+  <p-table
+    [value]="coins"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    dataKey="id"
+    [expandedRowKeys]="expandedRows"
+    (onRowExpand)="onRowExpand($event)"
+    (onRowCollapse)="onRowCollapse($event)"
+  >
+    <ng-template pTemplate="header">
+      <!-- مواردی که در صفحه اصلی هستند و باز میشوند -->
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Buy Price</th>
+        <th>Sell Price</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-coin let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="coin"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          />
+        </td>
+        <td>{{ coin.name }}</td>
+        <td>
+          <img
+            [src]="coin.image"
+            [alt]="coin.name"
+            width="50"
+            class="shadow-4"
+          />
+        </td>
+        <td>{{ coin.buyprice }}</td>
+        <td>{{ coin.sellprice }}</td>
+      </tr>
+    </ng-template>
+
+    <!-- مواردی که بعد از کلیک کردن نمایش داده میشوند-->
+
+    <ng-template pTemplate="rowexpansion" let-coin>
+      <tr>
+        <td colspan="7">
+          <div class="p-3">
+            <p-table [value]="coinsRate" dataKey="id">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Coin 1</th>
+                  <th>Coin 2</th>
+                  <th>Rate</th>
+                  <th>Sell Price</th>
+                  <th></th>
+                  <th style="width: 4rem"></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-coinRate>
+                @if (coin.id == coinRate.fromCoin.id) {
+                <tr>
+                  <td>
+                    <img
+                      [src]="coinRate.fromCoin.image"
+                      [alt]="coinRate.name"
+                      width="50"
+                      class="shadow-4"
+                    />{{ coinRate.fromCoin.name }}
+                  </td>
+                  <td>
+                    <img
+                      [src]="coinRate.toCoin.image"
+                      [alt]="coinRate.name"
+                      width="50"
+                      class="shadow-4"
+                    />{{ coinRate.toCoin.name }}
+                  </td>
+                  <td>
+                    {{
+                      coinRate.fromCoin.name +
+                        "میدهیم" +
+                        calculator.calculateCoinToCoin(
+                          coinRate.israte,
+                          amountInput,
+                          coinRate.rate
+                        ) +
+                        coinRate.toCoin.name +
+                        "میگیریم"
+                    }}
+                  </td>
+                  <td>
+                    {{
+                      "قیمت تمام شده " +
+                        calculator.calculateCoinprice(
+                          coinRate.israte,
+                          coinRate.fromCoin.buyprice,
+                          amountInput,
+                          coinRate.rate
+                        )
+                    }}
+                  </td>
+                  <td></td>
+                </tr>
+                }
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
