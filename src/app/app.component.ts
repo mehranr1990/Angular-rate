@@ -16,19 +16,19 @@ export class AppComponent implements OnInit {
         this.items = [
             {
                 label: 'COINS',
-                icon: 'pi pi-home',
+                icon: 'pi pi-bitcoin',
                 routerLink:'/coins'
                 
             },
             {
-                label: 'Features',
-                icon: 'pi pi-star',
+                label: 'COINS RATE',
+                icon: 'pi pi-table',
                 routerLink:'tableRate'
             },
            
             {
-                label: 'Contact',
-                icon: 'pi pi-envelope',
+                label: 'RATE EXCHANGE',
+                icon: 'pi pi-dollar',
                 routerLink:'tableRateExchange'
             }
         ]

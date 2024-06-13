@@ -1,0 +1,28 @@
+:host {
+  .imgwidth {
+    width: 100px !important;
+  }
+  .djcc {
+    display: flex;
+    justify-content: center;
+  }
+
+  ::ng-deep .p-card-header {
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .center-span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .center {
+    display: inline-flex;
+    align-items: center;
+  }
+  .center1{
+    
+    display: inline-flex; 
+    margin: '0 4px'
+    }
+}

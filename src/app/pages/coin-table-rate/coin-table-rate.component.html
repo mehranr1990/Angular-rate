@@ -11,31 +11,39 @@
     <ng-template pTemplate="body" let-coinRate>
       <tr>
         <td>
-          <img
-            [src]="coinRate.fromCoin.image"
-            [alt]="coinRate.name"
-            width="50"
-            class="shadow-4"
-          />{{ coinRate.fromCoin.name }}
+          <span class="inline-flex align-items-center gap-2">
+            <img
+              [src]="coinRate.fromCoin.image"
+              [alt]="coinRate.name"
+              width="24"
+              class=""
+            />
+            {{ coinRate.fromCoin.name }}
+          </span>
         </td>
 
         <td>
-          <img
-            [src]="coinRate.toCoin.image"
-            [alt]="coinRate.name"
-            width="50"
-            class="shadow-4"
-          />{{ coinRate.toCoin.name }}
+          <span class="inline-flex align-items-center gap-2">
+            <img
+              [src]="coinRate.toCoin.image"
+              [alt]="coinRate.name"
+              width="24"
+              class=""
+            />
+            {{ coinRate.toCoin.name }}
+          </span>
         </td>
 
         <td [pEditableColumn]="coinRate.rate" pEditableColumnField="rate">
-          <p-cellEditor>
+          <p-cellEditor >
             <ng-template pTemplate="input">
               <input
-                pInputText
+              width="100%"
+              pInputText
                 [(ngModel)]="rateInput"
                 (focus)="onfocus(coinRate)"
                 (keydown.enter)="onRateEdit(coinRate)"
+                (keydown.tab)="onRateEdit(coinRate)"
               />
             </ng-template>
             <ng-template pTemplate="output">
@@ -44,10 +52,10 @@
           </p-cellEditor>
         </td>
         <td>
-            <p-inputSwitch
-              [(ngModel)]="coinRate.israte"
-              (onChange)="onisRateEdit(coinRate)"
-            />
+          <p-inputSwitch
+            [(ngModel)]="coinRate.israte"
+            (onChange)="onisRateEdit(coinRate)"
+          />
         </td>
       </tr>
     </ng-template>

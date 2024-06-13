@@ -6,3 +6,4 @@ export interface Coin {
     sellprice:number
 }
 
+

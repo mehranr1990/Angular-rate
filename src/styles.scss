@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+table {
+  tr {
+    th,
+    td {
+      text-align: right;
+    }
+  }
+}
+
+.p-chip {
+
+    padding: 0 .25rem 0 .5rem;
+  img {
+    width: 25px;
+    height: 25px;
+    margin-left: 0.25rem;
+    margin-right: 0;
+  }
+
+  .p-chip-text {
+    margin: .25rem 0;
+    font-family: monospace;
+  }
+}

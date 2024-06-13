@@ -1,61 +1,74 @@
 <div class="p-8">
-  <div class="flex">
-    @for (item of coins; track $index) {
-    <p-card [header]="coins[$index].name" [style]="{ width: '360px' }">
-      <ng-template pTemplate="header">
-        <img alt="Card" [src]="coins[$index].image" />
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <div>
-          <label for="">Amount : </label>
-          <p-inputNumber inputId="integeronly" [(ngModel)]="amountInput" />
-        </div>
-        <div>
-          <label for="">Buy Price : </label>
-          <input
-            pInputText
-            [value]="coins[$index].buyprice"
-            (change)="buyInputChenge($event, coins[$index])"
-          />
-        </div>
-        <div>
-          <label for="">Sell Price : </label>
-          <input
-            pInputText
-            [value]="coins[$index].sellprice"
-            (change)="sellInputChenge($event, coins[$index])"
-          />
-        </div>
-        <div class="flex gap-3 mt-1">
-          <p-button
-            label="Cancel"
-            severity="secondary"
-            class="w-full"
-            styleClass="w-full"
-          />
-          <p-button label="Save" class="w-full" styleClass="w-full" />
-        </div>
-      </ng-template>
-    </p-card>
-
+  <div class="grid">
+    @for (item of coinsCards; track $index) {
+    <div class="col-12 md:col-6 lg:col-4 xl:col-3">
+      <p-card [header]="coinsCards[$index].name" class="djcc">
+        <ng-template pTemplate="header" class="djcc">
+          <img alt="Card" [src]="coinsCards[$index].image" class="imgwidth" />
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="">
+            <div class="center-span mb-5">
+              <p-floatLabel>
+                <input
+                  id="Amount"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="coinsCards[$index].amount"
+                />
+                <label for="Amount">Amount</label>
+              </p-floatLabel>
+            </div>
+            <div class="center-span mb-5">
+              <p-floatLabel>
+                <input
+                  id="Buy"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="coinsCards[$index].buyprice"
+                  (input)="buyInputChenge($event, coinsCards[$index])"
+                />
+                <label for="Buy">Buy Price</label>
+              </p-floatLabel>
+            </div>
+            <p-floatLabel>
+              <input
+                id="Sell"
+                type="text"
+                pInputText
+                [(ngModel)]="coinsCards[$index].sellprice"
+                (change)="sellInputChenge($event, coinsCards[$index])"
+              />
+              <label for="Sell">Sell Price</label>
+            </p-floatLabel>
+          </div>
+          <!-- <div class="flex gap-3 mt-1">
+            <p-button
+              label="Cancel"
+              severity="secondary"
+              class="w-full"
+              styleClass="w-full"
+            />
+            <p-button label="Save" class="w-full" styleClass="w-full" />
+          </div> -->
+        </ng-template>
+      </p-card>
+    </div>
     }
   </div>
   <br />
 
   <p-table
-    [value]="coins"
+    [value]="coinsCards"
     [tableStyle]="{ 'min-width': '50rem' }"
     dataKey="id"
     [expandedRowKeys]="expandedRows"
-    (onRowExpand)="onRowExpand($event)"
-    (onRowCollapse)="onRowCollapse($event)"
   >
     <ng-template pTemplate="header">
       <!-- مواردی که در صفحه اصلی هستند و باز میشوند -->
       <tr>
         <th></th>
         <th>Name</th>
-        <th>Image</th>
         <th>Buy Price</th>
         <th>Sell Price</th>
       </tr>
@@ -70,18 +83,17 @@
             [text]="true"
             [rounded]="true"
             [plain]="true"
-            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-left'"
           />
         </td>
-        <td>{{ coin.name }}</td>
+
         <td>
-          <img
-            [src]="coin.image"
-            [alt]="coin.name"
-            width="50"
-            class="shadow-4"
-          />
+          <span class="center gap-2">
+            {{ coin.name }}
+            <img [src]="coin.image" [alt]="coin.name" width="24" class=""
+          /></span>
         </td>
+
         <td>{{ coin.buyprice }}</td>
         <td>{{ coin.sellprice }}</td>
       </tr>
@@ -96,10 +108,10 @@
             <p-table [value]="coinsRate" dataKey="id">
               <ng-template pTemplate="header">
                 <tr>
-                  <th>Coin 1</th>
-                  <th>Coin 2</th>
+                  <th>Coin</th>
                   <th>Rate</th>
-                  <th>Sell Price</th>
+                  <th>قیمت تمام شده</th>
+                  <th>اختلاف قیمت تمام شده</th>
                   <th></th>
                   <th style="width: 4rem"></th>
                 </tr>
@@ -108,44 +120,87 @@
                 @if (coin.id == coinRate.fromCoin.id) {
                 <tr>
                   <td>
-                    <img
-                      [src]="coinRate.fromCoin.image"
-                      [alt]="coinRate.name"
-                      width="50"
-                      class="shadow-4"
-                    />{{ coinRate.fromCoin.name }}
+                    <span class="inline-flex align-items-center gap-2">
+                      <img
+                        [src]="coinRate.toCoin.image"
+                        [alt]="coinRate.name"
+                        width="24"
+                        class=""
+                      />
+                      {{ coinRate.toCoin.name }}
+                    </span>
                   </td>
                   <td>
-                    <img
-                      [src]="coinRate.toCoin.image"
-                      [alt]="coinRate.name"
-                      width="50"
-                      class="shadow-4"
-                    />{{ coinRate.toCoin.name }}
+                    <span class="flex align-items-center gap-2">
+                      <p-chip
+                        [label]="
+                          (coin.amount | currency : 'IRR' : ' ' : '0.0-4') +
+                          ' ' +
+                          coinRate.fromCoin.name
+                        "
+                        [image]="coinRate.fromCoin.image"
+                        [alt]="coinRate.fromCoin.name"
+                      />
+                      میدهیم
+                      <p-chip
+                        [label]="
+                          calculator.calculateCoinToCoin(
+                            coinRate.israte,
+                            coin.amount,
+                            coinRate.rate
+                          ) +
+                          ' ' +
+                          coinRate.toCoin.name
+                        "
+                        [image]="coinRate.toCoin.image"
+                        [alt]="coinRate.toCoin.name"
+                      />
+                      میگیریم
+                    </span>
                   </td>
                   <td>
-                    {{
-                      coinRate.fromCoin.name +
-                        "میدهیم" +
-                        calculator.calculateCoinToCoin(
-                          coinRate.israte,
-                          amountInput,
-                          coinRate.rate
-                        ) +
-                        coinRate.toCoin.name +
-                        "میگیریم"
-                    }}
+                    <span class="center gap-2">
+                      <span class="center gap-2">
+                        <span class="center1 gap-2">
+                          <img
+                            [src]="coinRate.toCoin.image"
+                            [alt]="coinRate.name"
+                            width="24"
+                            class=""
+                        /></span>
+                        <span class="gap-2">{{ "قیمت تمام شده " }}</span>
+                        <span>
+                          {{
+                            " : " +
+                              calculator.calculateCoinprice(
+                                coinRate.israte,
+                                coin.buyprice,
+
+                                coinRate.rate
+                              )
+                          }}
+                        </span>
+                      </span></span
+                    >
                   </td>
                   <td>
-                    {{
-                      "قیمت تمام شده " +
-                        calculator.calculateCoinprice(
-                          coinRate.israte,
-                          coinRate.fromCoin.buyprice,
-                          amountInput,
-                          coinRate.rate
-                        )
-                    }}
+                    <span>{{
+                      calculator.calculatepricedifference(
+                        coinRate.israte,
+                        coin.buyprice,
+                        coinRate.rate,
+                        coin.sellprice,
+                        coin.amount
+                      )
+                    }}</span>
+                    <span class="inline-flex align-items-center gap-2">
+                      <img
+                        [src]="coinRate.toCoin.image"
+                        [alt]="coinRate.toCoin.name"
+                        width="24"
+                        class=""
+                      />{{ coinRate.toCoin.name }}
+                    </span>
                   </td>
                   <td></td>
                 </tr>
