@@ -15,6 +15,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ChipModule } from 'primeng/chip';
 import { CurrencyPipe } from '@angular/common';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 interface CoinRateExchange {
   coin: Coin;
@@ -35,6 +36,7 @@ interface CoinRateExchange {
     FloatLabelModule,
     ChipModule,
     CurrencyPipe,
+    SelectButtonModule,
   ],
   templateUrl: './coin-table-rate-exchange.component.html',
   styleUrl: './coin-table-rate-exchange.component.scss',
@@ -49,17 +51,21 @@ export class CoinTableRateExchangeComponent {
   ) {}
   coins: Coin[] = [];
   coinsRate: CoinRate[] = [];
-
+  stateOptions: any[] = [
+    { label: 'بگیریم', value: 1 },
+    { label: 'بدهیم', value: 0 },
+  ];
+  value: string = 'off';
   expandedRows = {};
 
   ngOnInit(): void {
     this.coins = this.coinsService.getAll();
     this.coinsRate = this.coinRateService.getAll();
-
     this.coinsCards = this.coins.map((coin: Coin) => {
       return {
         ...coin,
         amount: 1,
+        exchangeStatus: 0,
       };
     });
   }

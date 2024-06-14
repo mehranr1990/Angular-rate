@@ -8,7 +8,7 @@
         </ng-template>
         <ng-template pTemplate="footer">
           <div class="">
-            <div class="center-span mb-5">
+            <div class="center-span mb-2">
               <p-floatLabel>
                 <input
                   id="Amount"
@@ -16,8 +16,16 @@
                   pInputText
                   [(ngModel)]="coinsCards[$index].amount"
                 />
-                <label for="Amount">Amount</label>
+                <label for="Amount">مقدار</label>
               </p-floatLabel>
+            </div>
+            <div class="centerinput mb-5" dir="ltr" >
+              <p-selectButton
+                [options]="stateOptions"
+                [(ngModel)]="coinsCards[$index].exchangeStatus"
+                optionLabel="label"
+                optionValue="value"
+              />
             </div>
             <div class="center-span mb-5">
               <p-floatLabel>
@@ -28,7 +36,7 @@
                   [(ngModel)]="coinsCards[$index].buyprice"
                   (input)="buyInputChenge($event, coinsCards[$index])"
                 />
-                <label for="Buy">Buy Price</label>
+                <label for="Buy">قیمت خرید</label>
               </p-floatLabel>
             </div>
             <p-floatLabel>
@@ -39,7 +47,7 @@
                 [(ngModel)]="coinsCards[$index].sellprice"
                 (change)="sellInputChenge($event, coinsCards[$index])"
               />
-              <label for="Sell">Sell Price</label>
+              <label for="Sell">قیمت فروش</label>
             </p-floatLabel>
           </div>
           <!-- <div class="flex gap-3 mt-1">
@@ -68,9 +76,10 @@
       <!-- مواردی که در صفحه اصلی هستند و باز میشوند -->
       <tr>
         <th></th>
-        <th>Name</th>
-        <th>Buy Price</th>
-        <th>Sell Price</th>
+        <th>نام ارز</th>
+        <th>قیمت خرید</th>
+        <th>قیمت فروش</th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-coin let-expanded="expanded">
@@ -94,8 +103,8 @@
           /></span>
         </td>
 
-        <td>{{ coin.buyprice }}</td>
-        <td>{{ coin.sellprice }}</td>
+        <td>{{ calculator.multiple(coin.buyprice,coin.amount) }}</td>
+        <td>{{ calculator.multiple(coin.sellprice,coin.amount)}}</td>
       </tr>
     </ng-template>
 
@@ -107,6 +116,7 @@
           <div class="p-3">
             <p-table [value]="coinsRate" dataKey="id">
               <ng-template pTemplate="header">
+                @if(coin.exchangeStatus === 0){
                 <tr>
                   <th>Coin</th>
                   <th>Rate</th>
@@ -115,46 +125,147 @@
                   <th></th>
                   <th style="width: 4rem"></th>
                 </tr>
+                }@else {
+                <tr>  
+                  <th>Coin</th>
+                  <th>Rate</th>
+                  <th>قیمت خرید بر اساس ارز</th>
+                  <th> قیمت تمام شده بر اساس ریت  </th>
+                  <th></th>
+                  <th style="width: 4rem"></th>
+                </tr>
+                }
               </ng-template>
               <ng-template pTemplate="body" let-coinRate>
-                @if (coin.id == coinRate.fromCoin.id) {
+                @if (coin.exchangeStatus === 0) {
+                  @if (coin.id == coinRate.fromCoin.id) {
+                    <tr>
+                      <td>
+                        <span class="inline-flex align-items-center gap-2">
+                          <img
+                            [src]="coinRate.toCoin.image"
+                            [alt]="coinRate.name"
+                            width="24"
+                            class=""
+                          />
+                          {{ coinRate.toCoin.name }}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="flex align-items-center gap-2">
+                          <p-chip
+                            [label]="
+                              (coin.amount | currency : 'IRR' : ' ' : '0.0-4') +
+                              ' ' +
+                              coinRate.fromCoin.name
+                            "
+                            [image]="coinRate.fromCoin.image"
+                            [alt]="coinRate.fromCoin.name"
+                          />
+                          میدهیم
+                          <p-chip
+                            [label]="
+                              calculator.calculateCoinToCoin(
+                                coinRate.israte,
+                                coin.amount,
+                                coinRate.rate
+                              ) +
+                              ' ' +
+                              coinRate.toCoin.name
+                            "
+                            [image]="coinRate.toCoin.image"
+                            [alt]="coinRate.toCoin.name"
+                          />
+                          میگیریم
+                        </span>
+                      </td>
+                      <td>
+                        <span class="center gap-2">
+                          <span class="center gap-2">
+                            <span class="center1 gap-2">
+                              <img
+                                [src]="coinRate.toCoin.image"
+                                [alt]="coinRate.name"
+                                width="24"
+                                class=""
+                            /></span>
+                            <span class="gap-2">{{ "قیمت تمام شده " }}</span>
+                            <span>
+                              {{
+                                " : " +
+                                  calculator.calculateCoinprice(
+                                    coinRate.israte,
+                                    coin.buyprice,
+    
+                                    coinRate.rate
+                                  )
+                              }}
+                            </span>
+                          </span></span
+                        >
+                      </td>
+                      <td>
+                        <span>{{
+                          calculator.calculatepricedifference(
+                            coinRate.israte,
+                            coin.buyprice,
+                            coinRate.rate,
+                            coin.sellprice,
+                            coin.amount
+                          )
+                        }}</span>
+                        <span class="inline-flex align-items-center gap-2">
+                          <img
+                            [src]="coinRate.toCoin.image"
+                            [alt]="coinRate.toCoin.name"
+                            width="24"
+                            class=""
+                          />{{ coinRate.toCoin.name }}
+                        </span>
+                      </td>
+                      <td></td>
+                    </tr>
+                    }
+                }@else {
+                @if (coin.id == coinRate.toCoin.id) {
                 <tr>
                   <td>
                     <span class="inline-flex align-items-center gap-2">
                       <img
-                        [src]="coinRate.toCoin.image"
+                        [src]="coinRate.fromCoin.image"
                         [alt]="coinRate.name"
                         width="24"
                         class=""
                       />
-                      {{ coinRate.toCoin.name }}
+                      {{ coinRate.fromCoin.name }}
                     </span>
                   </td>
                   <td>
                     <span class="flex align-items-center gap-2">
                       <p-chip
-                        [label]="
-                          (coin.amount | currency : 'IRR' : ' ' : '0.0-4') +
-                          ' ' +
-                          coinRate.fromCoin.name
-                        "
-                        [image]="coinRate.fromCoin.image"
-                        [alt]="coinRate.fromCoin.name"
-                      />
+                      [label]="
+                        calculator.calculateGivetoGet(
+                          coinRate.israte,
+                          coin.amount,
+                          coinRate.rate
+                        ) +
+                        ' ' +
+                        coinRate.fromCoin.name
+                      "
+                      [image]="coinRate.fromCoin.image"
+                      [alt]="coinRate.fromCoin.name"
+                    />
                       میدهیم
+                     
                       <p-chip
-                        [label]="
-                          calculator.calculateCoinToCoin(
-                            coinRate.israte,
-                            coin.amount,
-                            coinRate.rate
-                          ) +
-                          ' ' +
-                          coinRate.toCoin.name
-                        "
-                        [image]="coinRate.toCoin.image"
-                        [alt]="coinRate.toCoin.name"
-                      />
+                      [label]="
+                        (coin.amount | currency : 'IRR' : ' ' : '0.0-4') +
+                        ' ' +
+                        coinRate.toCoin.name
+                      "
+                      [image]="coinRate.toCoin.image"
+                      [alt]="coinRate.toCoin.name"
+                    />
                       میگیریم
                     </span>
                   </td>
@@ -172,10 +283,9 @@
                         <span>
                           {{
                             " : " +
-                              calculator.calculateCoinprice(
+                              calculator.calculateCoinprice2(
                                 coinRate.israte,
-                                coin.buyprice,
-
+                                coinRate.fromCoin.buyprice,
                                 coinRate.rate
                               )
                           }}
@@ -185,12 +295,11 @@
                   </td>
                   <td>
                     <span>{{
-                      calculator.calculatepricedifference(
+                      calculator.calculatesellbuyprice(
                         coinRate.israte,
-                        coin.buyprice,
+                        coin.amount,
                         coinRate.rate,
-                        coin.sellprice,
-                        coin.amount
+                        coinRate.fromCoin.buyprice
                       )
                     }}</span>
                     <span class="inline-flex align-items-center gap-2">
@@ -201,10 +310,29 @@
                         class=""
                       />{{ coinRate.toCoin.name }}
                     </span>
+                    </td>
+                    <td>
+                      
+                      <span>{{
+                        calculator.calculateprofitofselleng(
+                          coinRate.israte,
+                          coin.amount,
+                          coinRate.rate,
+                          coinRate.fromCoin.buyprice,
+                          coinRate.toCoin.sellprice
+                        )
+                      }}</span>
+                      <span class="inline-flex align-items-center gap-2">
+                        <img
+                          [src]="coinRate.toCoin.image"
+                          [alt]="coinRate.toCoin.name"
+                          width="24"
+                          class=""
+                        />{{ coinRate.toCoin.name }}
+                      </span>
                   </td>
-                  <td></td>
                 </tr>
-                }
+                }}
               </ng-template>
             </p-table>
           </div>
