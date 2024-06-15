@@ -71,8 +71,34 @@ export class CoinTableRateExchangeComponent {
   }
   buyInputChenge(event: any, e: Coin) {
     this.coinsService.update(e.id, event.target.value, e.sellprice);
+    if (this.stateOptions) {
+      for (let index = 0; index < this.coinsRate.length; index++) {
+        if (this.coinsRate[index].fromCoin.id === e.id) {
+          this.coinsRate[index].fromCoin.buyprice = event.target.value;
+        }
+      }
+    } else {
+      for (let index = 0; index < this.coinsRate.length; index++) {
+        if (this.coinsRate[index].toCoin.id === e.id) {
+          this.coinsRate[index].toCoin.buyprice = event.target.value;
+        }
+      }
+    }
   }
   sellInputChenge(event: any, e: Coin) {
     this.coinsService.update(e.id, e.buyprice, event.target.value);
+    if (this.stateOptions) {
+      for (let index = 0; index < this.coinsRate.length; index++) {
+        if (this.coinsRate[index].fromCoin.id === e.id) {
+          this.coinsRate[index].fromCoin.sellprice = event.target.value;
+        }
+      }
+    } else {
+      for (let index = 0; index < this.coinsRate.length; index++) {
+        if (this.coinsRate[index].toCoin.id === e.id) {
+          this.coinsRate[index].toCoin.sellprice = event.target.value;
+        }
+      }
+    }
   }
 }
