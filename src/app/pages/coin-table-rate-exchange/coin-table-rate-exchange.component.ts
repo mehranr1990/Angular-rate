@@ -91,6 +91,7 @@ export class CoinTableRateExchangeComponent {
   sellInputChenge(event: any, e: Coin) {
     this.coinsService.update(e.id, e.buyprice, event.target.value);
     if (this.stateOptions) {
+      this.calculator.bestprice(e.id)
       for (let index = 0; index < this.coinsRate.length; index++) {
         if (this.coinsRate[index].fromCoin.id === e.id) {
           this.coinsRate[index].fromCoin.sellprice = event.target.value;
