@@ -13,6 +13,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import * as uuid from 'uuid';
 import { CoinsService } from '../../core/services/coins.service';
 import { ImageModule } from 'primeng/image';
+import { CoinRateService } from '../../core/services/coin-rate.service';
 
 @Component({
   selector: 'app-add-coin',
@@ -24,13 +25,16 @@ import { ImageModule } from 'primeng/image';
     DialogModule,
     InputTextModule,
     FileUploadModule,
-    ImageModule
+    ImageModule,
   ],
   templateUrl: './add-coin.component.html',
   styleUrl: './add-coin.component.scss',
 })
 export class AddCoinComponent {
-  constructor(private coinsService: CoinsService) {}
+  constructor(
+    private coinsService: CoinsService,
+    private coinsRateService: CoinRateService
+  ) {}
 
   visible: boolean = false;
 
@@ -67,6 +71,7 @@ export class AddCoinComponent {
 
   toggleDialog() {
     this.addCoinFormGroup.reset();
+    // this.coinsRateService.create();
     this.visible = !this.visible;
   }
 }

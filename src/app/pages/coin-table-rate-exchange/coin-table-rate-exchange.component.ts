@@ -59,7 +59,10 @@ export class CoinTableRateExchangeComponent {
   expandedRows = {};
 
   ngOnInit(): void {
-    this.coins = this.coinsService.getAll();
+    this.coinsService.getAll();
+    this.coinsService.coins.subscribe({next:(coins=>{
+      this.coins = coins
+    })})
     this.coinsRate = this.coinRateService.getAll();
     this.coinsCards = this.coins.map((coin: Coin) => {
       return {

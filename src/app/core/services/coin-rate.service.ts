@@ -3,6 +3,7 @@ import { CoinsService } from './coins.service';
 import { CoinRate } from '../models/coin-rate.model';
 import { LocalstorageDBService } from './localstorage-db.service';
 import * as uuid from 'uuid';
+import { Coin } from '../models/coin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,11 @@ export class CoinRateService {
     return this._coinRateList;
   }
   public create() {
-    const coins = this.coinService.getAll();
+    let coins:Coin[] = []
+    this.coinService.getAll();
+    this.coinService.coins.subscribe({next:(coin)=>{
+      coins=coin
+    }})
     this._coinRateList = [];
     for (let mainCoinIndex = 0; mainCoinIndex < coins.length; mainCoinIndex++) {
       for (
