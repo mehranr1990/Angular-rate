@@ -8,5 +8,4 @@ export const routes: Routes = [
     {path:'coins', component:CoinsPageComponent},
     {path:'tableRate', component:CoinTableRateComponent},
     {path:'tableRateExchange', component:CoinTableRateExchangeComponent},
-
  ];

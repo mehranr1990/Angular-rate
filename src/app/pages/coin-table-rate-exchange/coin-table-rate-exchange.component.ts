@@ -11,6 +11,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { CalculatorCoinExchangeService } from '../../core/services/calculator-coin-exchange.service';
+import { BestPriceModalComponent } from '../../components/best-price-modal/best-price-modal.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ChipModule } from 'primeng/chip';
@@ -37,6 +38,7 @@ interface CoinRateExchange {
     ChipModule,
     CurrencyPipe,
     SelectButtonModule,
+    BestPriceModalComponent
   ],
   templateUrl: './coin-table-rate-exchange.component.html',
   styleUrl: './coin-table-rate-exchange.component.scss',
@@ -45,6 +47,7 @@ export class CoinTableRateExchangeComponent {
   sellInput: number = 0;
   coinsCards: any = [];
   constructor(
+
     private coinsService: CoinsService,
     private coinRateService: CoinRateService,
     public readonly calculator: CalculatorCoinExchangeService
@@ -57,7 +60,10 @@ export class CoinTableRateExchangeComponent {
   ];
   value: string = 'off';
   expandedRows = {};
-
+  calcutebestpriceforthiscoin(e:any){
+    
+    this.calculator.bestprice(e)
+  }
   ngOnInit(): void {
     this.coinsService.getAll();
     this.coinsService.coins.subscribe({next:(coins=>{
@@ -91,7 +97,7 @@ export class CoinTableRateExchangeComponent {
   sellInputChenge(event: any, e: Coin) {
     this.coinsService.update(e.id, e.buyprice, event.target.value);
     if (this.stateOptions) {
-      this.calculator.bestprice(e.id)
+      
       for (let index = 0; index < this.coinsRate.length; index++) {
         if (this.coinsRate[index].fromCoin.id === e.id) {
           this.coinsRate[index].fromCoin.sellprice = event.target.value;

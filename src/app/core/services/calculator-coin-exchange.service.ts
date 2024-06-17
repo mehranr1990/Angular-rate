@@ -6,9 +6,8 @@ import { filter } from 'rxjs';
   providedIn: 'root',
 })
 export class CalculatorCoinExchangeService {
-  private rateCoinArr:any = []
   constructor(private coinRateService: CoinRateService) {}
-  
+  private besstprice: any = [];
   public calculateCoinToCoin(isRate: boolean, amount: number, rate: number) {
     if (isRate) {
       return Number(
@@ -139,46 +138,53 @@ export class CalculatorCoinExchangeService {
   public multiple(price: number, amount: number) {
     return price * amount;
   }
+
   public bestprice(coinId: string) {
-    
+    const rateCoinArr: any = [];
     const coinRateTable = this.coinRateService.getAll();
     const coinrate = coinRateTable.filter(
       (cointable) => coinId === cointable.toCoin.id
     );
     for (let index = 0; index < coinrate.length; index++) {
-      this.rateCoinArr.push({
-        priceafter: Number(
-          (1 / (1 + coinrate[index].rate / 100)) *
-            coinrate[index].fromCoin.buyprice
-        ),
-        fullcoinRate: coinrate[index]
-      });
-    }
-    this.rateCoinArr.sort((a: any, b: any) => a.priceafter - b.priceafter);
-
-    if (+ this.rateCoinArr[0].priceafter < + this.rateCoinArr[0].fullcoinRate.toCoin.buyprice) {
-      console.log('in if' +  this.rateCoinArr[0].fullcoinRate.fromCoin.name);
-      console.log('قیمت تمام شده' +  this.rateCoinArr[0].priceafter);
-      // console.log('بهتره از')
-      // console.log(rateprice[0].fullcoinRate.toCoin.buyprice);
-      // console.log(rateprice[0].fullcoinRate.toCoin.name);
-      if ( this.rateCoinArr.length < 5) {
-        console.log( this.rateCoinArr);
-
-        this.bestprice( this.rateCoinArr[0].fullcoinRate.fromCoin.id);
-      }else{
-        this.rateCoinArr =[]
-        return
+      if (coinrate[index].israte) {
+        rateCoinArr.push({
+          priceafter: Number(
+            (1 / (1 + coinrate[index].rate / 100)) *
+              coinrate[index].fromCoin.buyprice
+          ),
+          fullcoinRate: coinrate[index],
+        });
+      } else {
+        if (coinrate[index].rate > 0) {
+          rateCoinArr.push({
+            priceafter: Number(
+              (1 / +coinrate[index].rate) * coinrate[index].fromCoin.buyprice
+            ),
+            fullcoinRate: coinrate[index],
+          });
+        } else {
+          rateCoinArr.push({
+            priceafter: Number(
+              -1 * coinrate[index].rate * coinrate[index].fromCoin.buyprice
+            ),
+            fullcoinRate: coinrate[index],
+          });
+        }
       }
-       this.rateCoinArr.push({
-        coin:  this.rateCoinArr[0].fullcoinRate.fromCoin.name,
-        endprice:  this.rateCoinArr[0].priceafter,
-      });
-      console.log( this.rateCoinArr);
-      return;
     }
-    console.log('out if' +  this.rateCoinArr[0].fullcoinRate.toCoin.name);
-    console.log('تمومه');
-    return;
+    rateCoinArr.sort((a: any, b: any) => a.priceafter - b.priceafter);
+    console.log(rateCoinArr);
+    if (
+      rateCoinArr[0].priceafter < rateCoinArr[0].fullcoinRate.toCoin.buyprice
+    ) {
+      if (this.besstprice.length < rateCoinArr.length) {
+        this.besstprice.push(rateCoinArr[0]);
+        console.log(this.besstprice);
+        this.bestprice(rateCoinArr[0].fullcoinRate.fromCoin.id);
+      }
+    } else {
+      console.log('تو لوپه');
+    }
+    this.besstprice = [];
   }
 }

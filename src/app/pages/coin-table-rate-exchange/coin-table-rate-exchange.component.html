@@ -4,10 +4,12 @@
     <div class="col-12 md:col-6 lg:col-4 xl:col-3">
       <p-card [header]="coinsCards[$index].name" class="djcc">
         <ng-template pTemplate="header" class="djcc">
-          <img alt="Card" [src]="coinsCards[$index].image" class="imgwidth" />
-        </ng-template>
+          <img alt="Card" [src]="coinsCards[$index].image" class="imgwidth" (click)="calcutebestpriceforthiscoin(coinsCards[$index].id)"/>
+          </ng-template>
+          <div class="centerinput mb-5"    >
+        <app-best-price-modal id={{coinsCards[$index].id}}></app-best-price-modal></div>
         <ng-template pTemplate="footer">
-          <div class="">
+          <div class="">  
             <div class="center-span mb-2">
               <p-floatLabel>
                 <input
