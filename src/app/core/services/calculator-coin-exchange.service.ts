@@ -140,6 +140,7 @@ export class CalculatorCoinExchangeService {
   }
 
   public bestprice(coinId: string) {
+    
     const rateCoinArr: any = [];
     const coinRateTable = this.coinRateService.getAll();
     const coinrate = coinRateTable.filter(
@@ -173,15 +174,14 @@ export class CalculatorCoinExchangeService {
       }
     }
     rateCoinArr.sort((a: any, b: any) => a.priceafter - b.priceafter);
-    console.log(rateCoinArr);
     if (
       rateCoinArr[0].priceafter < rateCoinArr[0].fullcoinRate.toCoin.buyprice
     ) {
       if (this.besstprice.length < rateCoinArr.length) {
         this.besstprice.push(rateCoinArr[0]);
-        console.log(this.besstprice);
         this.bestprice(rateCoinArr[0].fullcoinRate.fromCoin.id);
-      }
+        }
+      return this.besstprice
     } else {
       console.log('تو لوپه');
     }

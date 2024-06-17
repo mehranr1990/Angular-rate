@@ -10,15 +10,11 @@
   position="center"
   [style]="{ width: '25rem' }"
 >
-  <div class="flex align-items-center gap-3 mb-3">
-    <span class="p-text-secondary block mb-5"> طولانیه </span>
+@for (item of array; track $index) {  
+<div class="flex align-items-center gap-3 mb-3">
+    <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span>
   </div>
-  <div class="flex align-items-center gap-3 mb-3">
-    <span class="p-text-secondary block mb-5"> تو خودت باش </span>
-  </div>
-  <div class="flex align-items-center gap-3 mb-5">
-    <span class="p-text-secondary block mb-5"> دایی </span>
-  </div>
+}
   <div class="flex justify-content-end gap-2">
     <p-button label="تایید" (click)="visible = false" />
   </div>
