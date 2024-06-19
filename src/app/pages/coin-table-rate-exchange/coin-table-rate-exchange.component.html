@@ -1,7 +1,13 @@
 <div class="p-8">
   <div class="grid">
-    @for (item of coinsCards; track $index) {
-      <app-coin-change-card [coinsCards]="coinsCards[$index]"></app-coin-change-card>
+    @for (item of coins; track $index) {
+    <div class="col-12 md:col-6 lg:col-4 xl:col-3">
+      <app-coin-change-card
+        [coin]="coinsCards[$index]"
+        (onAmount)="changeAmount($event)"
+        (onExchangeStatus)="changeExchangeStatus($event)"
+      ></app-coin-change-card>
+    </div>
     }
   </div>
 
@@ -57,16 +63,16 @@
               <ng-template pTemplate="header">
                 @if(coin.exchangeStatus === 0){
                 <tr>
-                  <th style="width: 25%">ارز</th>
-                  <th style="width: 25%">تبدیل</th>
+                  <th style="width: 10%">ارز</th>
+                  <th style="width: 40%">تبدیل</th>
                   <th style="width: 25%">قیمت تمام شده هر ارز</th>
                   <th style="width: 25%"></th>
                   <th style="width: 4rem"></th>
                 </tr>
                 }@else {
                 <tr>
-                  <th style="width: 25%">ارز</th>
-                  <th style="width: 25%">تبدیل</th>
+                  <th style="width: 10%">ارز</th>
+                  <th style="width: 40%">تبدیل</th>
                   <th style="width: 25%">قیمت تمام شده هر {{ coin.name }}</th>
                   <th style="width: 25%">
                     قیمت تمام شده

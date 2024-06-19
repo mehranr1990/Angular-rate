@@ -17,7 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ChipModule } from 'primeng/chip';
 import { CurrencyPipe } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import {CoinChangeCardComponent} from '../../components/coin-change-card/coin-change-card.component'
+import { CoinChangeCardComponent } from '../../components/coin-change-card/coin-change-card.component';
 @Component({
   selector: 'app-coin-table-rate-exchange',
   standalone: true,
@@ -35,7 +35,7 @@ import {CoinChangeCardComponent} from '../../components/coin-change-card/coin-ch
     CurrencyPipe,
     SelectButtonModule,
     BestPriceModalComponent,
-    CoinChangeCardComponent
+    CoinChangeCardComponent,
   ],
   templateUrl: './coin-table-rate-exchange.component.html',
   styleUrl: './coin-table-rate-exchange.component.scss',
@@ -48,7 +48,6 @@ export class CoinTableRateExchangeComponent {
     private coinsService: CoinsService,
     private coinRateService: CoinRateService,
     public readonly calculator: CalculatorCoinExchangeService
-    
   ) {}
 
   expandedRows = {};
@@ -68,5 +67,14 @@ export class CoinTableRateExchangeComponent {
         exchangeStatus: 0,
       };
     });
+  }
+
+  changeAmount(payload: any) {
+    const coin = this.coinsCards.find(coin=>coin.id === payload.coin.id)
+    coin.amount = payload.amount
+  }
+  changeExchangeStatus(payload: any){
+    const coin = this.coinsCards.find(coin=>coin.id === payload.coin.id)
+    coin.exchangeStatus = payload.exchangeStatus
   }
 }

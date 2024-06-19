@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -30,7 +30,15 @@ import { CoinRateService } from '../../core/services/coin-rate.service';
   styleUrl: './coin-change-card.component.scss',
 })
 export class CoinChangeCardComponent implements OnInit {
-  @Input() coinsCards: any;
+  @Input({ alias: 'coin', required: true }) coin: Coin;
+  
+  amount: number = 1;
+  exchangeStatus: number = 0;
+  
+  @Output('onAmount') onAmount: EventEmitter<{}> = new EventEmitter<{}>();
+  @Output('onExchangeStatus') onExchangeStatus: EventEmitter<{}> =
+    new EventEmitter<{}>();
+
   constructor(
     private coinsService: CoinsService,
     private coinRateService: CoinRateService,
@@ -46,20 +54,22 @@ export class CoinChangeCardComponent implements OnInit {
   calcutebestpriceforthiscoin(e: any) {
     this.calculator.bestprice(e);
   }
-  ngOnInit() {}
+  ngOnInit() {
 
-  buyInputChenge(event: any, e: Coin) {
-    this.coinsService.update(e.id, event.target.value, e.sellprice);
+  }
+
+  buyInputChenge() {
+    this.coinsService.update(this.coin.id, this.coin.buyprice, this.coin.sellprice);
     if (this.stateOptions) {
       for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].fromCoin.id === e.id) {
-          this.coinsRate[index].fromCoin.buyprice = event.target.value;
+        if (this.coinsRate[index].fromCoin.id === this.coin.id) {
+          this.coinsRate[index].fromCoin.buyprice = this.coin.buyprice;
         }
       }
     } else {
       for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].toCoin.id === e.id) {
-          this.coinsRate[index].toCoin.buyprice = event.target.value;
+        if (this.coinsRate[index].toCoin.id === this.coin.id) {
+          this.coinsRate[index].toCoin.buyprice = this.coin.buyprice;
         }
       }
     }
@@ -79,5 +89,13 @@ export class CoinChangeCardComponent implements OnInit {
         }
       }
     }
+  }
+
+  onAmountChange() {
+    this.onAmount.emit({amount:this.amount,coin: this.coin});
+
+  }
+  onExchangeStatusChange(){
+    this.onExchangeStatus.emit({exchangeStatus:this.exchangeStatus,coin: this.coin })
   }
 }

@@ -1,18 +1,15 @@
-<div class="pr-8">
-
-<div class="col-12 md:col-6 lg:col-4 xl:col-3">
-    <p-card [header]="coinsCards.name" class="djcc">
+    <p-card [header]="coin.name" class="djcc">
       <ng-template pTemplate="header" class="djcc">
         <img
           alt="Card"
-          [src]="coinsCards.image"
+          [src]="coin.image"
           class="imgwidth"
-          (click)="calcutebestpriceforthiscoin(coinsCards.id)"
+          (click)="calcutebestpriceforthiscoin(coin.id)"
         />
       </ng-template>
       <div class="centerinput mb-5">
         <app-best-price-modal
-          [id]="coinsCards.id"
+          [id]="coin.id"
         ></app-best-price-modal>
       </div>
       <ng-template pTemplate="footer">
@@ -23,7 +20,8 @@
                 id="Amount"
                 type="text"
                 pInputText
-                [(ngModel)]="coinsCards.amount"
+                [(ngModel)]="amount"
+                (ngModelChange)="onAmountChange()"
               />
               <label for="Amount">مقدار</label>
             </p-floatLabel>
@@ -31,7 +29,8 @@
           <div class="centerinput mb-5" dir="ltr">
             <p-selectButton
               [options]="stateOptions"
-              [(ngModel)]="coinsCards.exchangeStatus"
+              [(ngModel)]="exchangeStatus"
+              (ngModelChange)="onExchangeStatusChange()"
               optionLabel="label"
               optionValue="value"
             />
@@ -42,8 +41,8 @@
                 id="Buy"
                 type="text"
                 pInputText
-                [(ngModel)]="coinsCards.buyprice"
-                (input)="buyInputChenge($event, coinsCards)"
+                [(ngModel)]="coin.buyprice"
+                (ngModelChange)="buyInputChenge()"
               />
               <label for="Buy">قیمت خرید</label>
             </p-floatLabel>
@@ -53,8 +52,8 @@
               id="Sell"
               type="text"
               pInputText
-              [(ngModel)]="coinsCards.sellprice"
-              (input)="sellInputChenge($event, coinsCards)"
+              [(ngModel)]="coin.sellprice"
+              (ngModelChange)="sellInputChenge($event, coin)"
             />
             <label for="Sell">قیمت فروش</label>
           </p-floatLabel>
@@ -70,5 +69,3 @@
         </div> -->
       </ng-template>
     </p-card>
-  </div>
-  </div>
