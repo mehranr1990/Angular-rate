@@ -30,9 +30,9 @@ export class CoinTableRateComponent implements OnInit {
     
     
   }
-  toggleDialog() {
-    this.coinRateService.create();
-  }
+  // toggleDialog() {
+  //   this.coinRateService.create();
+  // }
   onfocus(e:CoinRate){
     this.rateInput = e.rate 
   }

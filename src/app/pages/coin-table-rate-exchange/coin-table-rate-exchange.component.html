@@ -6,7 +6,7 @@
         <ng-template pTemplate="header" class="djcc">
           <img alt="Card" [src]="coinsCards[$index].image" class="imgwidth" (click)="calcutebestpriceforthiscoin(coinsCards[$index].id)"/>
           </ng-template>
-          <div class="centerinput mb-5"    >
+          <div class="centerinput mb-5">
         <app-best-price-modal [id]="coinsCards[$index].id"></app-best-price-modal></div>
         <ng-template pTemplate="footer">
           <div class="">  
@@ -77,11 +77,11 @@
     <ng-template pTemplate="header">
       <!-- مواردی که در صفحه اصلی هستند و باز میشوند -->
       <tr>
-        <th></th>
-        <th>نام ارز</th>
-        <th>قیمت خرید</th>
-        <th>قیمت فروش</th>
-        <th></th>
+        <th style="width:20%"></th>
+        <th style="width:20%">نام ارز</th>
+        <th style="width:20%">قیمت خرید</th>
+        <th style="width:20%">قیمت فروش</th>
+        <th style="width:20%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-coin let-expanded="expanded">
@@ -105,8 +105,8 @@
           /></span>
         </td>
 
-        <td>{{ calculator.multiple(coin.buyprice,coin.amount) }}</td>
-        <td>{{ calculator.multiple(coin.sellprice,coin.amount)}}</td>
+        <td>{{ calculator.multiple(coin.buyprice,coin.amount) }} تومان</td>
+        <td>{{ calculator.multiple(coin.sellprice,coin.amount)}} تومان</td>
       </tr>
     </ng-template>
 
@@ -120,20 +120,27 @@
               <ng-template pTemplate="header">
                 @if(coin.exchangeStatus === 0){
                 <tr>
-                  <th>Coin</th>
-                  <th>Rate</th>
-                  <th>قیمت تمام شده</th>
-                  <th>اختلاف قیمت تمام شده</th>
-                  <th></th>
+                  <th style="width:25%">ارز</th>
+                  <th style="width:25%">تبدیل</th>
+                  <th style="width:25%">قیمت تمام شده هر ارز</th>
+                  <th style="width:25%"></th>
                   <th style="width: 4rem"></th>
                 </tr>
                 }@else {
                 <tr>  
-                  <th>Coin</th>
-                  <th>Rate</th>
-                  <th>قیمت خرید بر اساس ارز</th>
-                  <th> قیمت تمام شده بر اساس ریت  </th>
-                  <th></th>
+                  <th style="width:25%">ارز</th>
+                  <th style="width:25%">تبدیل</th>
+                  <th style="width:25%">قیمت تمام شده هر {{coin.name}}</th>
+                  <th style="width:25%"> قیمت تمام شده   <span class="center gap-2">{{coin.amount}} {{coin.name}}  <img 
+                    class="center1"
+                    [src]="coin.image"
+                    [alt]="coin.name"
+                    width="24"
+                    class=""
+                />
+              </span>
+              </th>
+                  <th style="width:25%"></th>
                   <th style="width: 4rem"></th>
                 </tr>
                 }
@@ -184,6 +191,7 @@
                       <td>
                         <span class="center gap-2">
                           <span class="center gap-2">
+                            <span class="gap-2">{{ "قیمت تمام شده " }}</span>
                             <span class="center1 gap-2">
                               <img
                                 [src]="coinRate.toCoin.image"
@@ -191,7 +199,6 @@
                                 width="24"
                                 class=""
                             /></span>
-                            <span class="gap-2">{{ "قیمت تمام شده " }}</span>
                             <span>
                               {{
                                 " : " +
@@ -203,11 +210,12 @@
                                   )
                               }}
                             </span>
-                          </span></span
-                        >
+                          </span>
+                          <span>تومان</span>
+                          </span>
                       </td>
                       <td>
-                        <span>{{
+                        <!-- <span>{{
                           calculator.calculatepricedifference(
                             coinRate.israte,
                             coin.buyprice,
@@ -223,7 +231,7 @@
                             width="24"
                             class=""
                           />{{ coinRate.toCoin.name }}
-                        </span>
+                        </span> -->
                       </td>
                       <td></td>
                     </tr>
@@ -274,6 +282,7 @@
                   <td>
                     <span class="center gap-2">
                       <span class="center gap-2">
+                        <span class="gap-2">{{ "قیمت تمام شده " }}</span>
                         <span class="center1 gap-2">
                           <img
                             [src]="coinRate.toCoin.image"
@@ -281,7 +290,6 @@
                             width="24"
                             class=""
                         /></span>
-                        <span class="gap-2">{{ "قیمت تمام شده " }}</span>
                         <span>
                           {{
                             " : " +
@@ -292,7 +300,9 @@
                               )
                           }}
                         </span>
-                      </span></span
+                      </span>
+                  <span>تومان</span>
+                      </span
                     >
                   </td>
                   <td>
@@ -305,17 +315,12 @@
                       )
                     }}</span>
                     <span class="inline-flex align-items-center gap-2">
-                      <img
-                        [src]="coinRate.toCoin.image"
-                        [alt]="coinRate.toCoin.name"
-                        width="24"
-                        class=""
-                      />{{ coinRate.toCoin.name }}
+                     تومان
                     </span>
                     </td>
                     <td>
                       
-                      <span>{{
+                      <!-- <span>{{
                         calculator.calculateprofitofselleng(
                           coinRate.israte,
                           coin.amount,
@@ -331,7 +336,7 @@
                           width="24"
                           class=""
                         />{{ coinRate.toCoin.name }}
-                      </span>
+                      </span> -->
                   </td>
                 </tr>
                 }}

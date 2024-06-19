@@ -8,14 +8,53 @@
   [modal]="true"
   [(visible)]="visible"
   position="center"
-  [style]="{ width: '25rem' }"
+  [style]="{ width: '35rem' }"
 >
-@for (item of array; track $index) {  
-<div class="flex align-items-center gap-3 mb-3">
-    <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span>
+@if(array.length<1){
+  <div class="flex align-items-center gap-3 mb-3 width">
+    <div class="center">
+      <span>بهترین حالت خرید خود ارز است</span>
+    </div>
+
+
+
+    <!-- <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span> -->
   </div>
-}
+  
   <div class="flex justify-content-end gap-2">
     <p-button label="تایید" (click)="visible = false" />
   </div>
+}@else {
+  @for (item of array; track $index) {
+  <div class="flex align-items-center gap-3 mb-3 width">
+    <div class="center">
+      <span class="center1">{{ item.fullcoinRate.fromCoin.name }}</span>
+      <span class="center1">
+        <img
+          [src]="item.fullcoinRate.fromCoin.image"
+          [alt]="item.fullcoinRate.fromCoin.name"
+        />
+      </span>
+    </div>
+    <span>-></span>
+    <div class="center">
+      <span class="center1">{{ item.fullcoinRate.toCoin.name }}</span>
+      <span class="center1">
+        <img
+          [src]="item.fullcoinRate.toCoin.image"
+          [alt]="item.fullcoinRate.toCoin.name"
+        />
+      </span>
+    </div>
+<span>{{item.priceafter.toFixed(4)}}</span>
+<span>میزان سود {{(+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4)}} تومان</span>
+
+
+
+    <!-- <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span> -->
+  </div>
+  }
+  <div class="flex justify-content-end gap-2">
+    <p-button label="تایید" (click)="visible = false" />
+  </div>}
 </p-dialog>

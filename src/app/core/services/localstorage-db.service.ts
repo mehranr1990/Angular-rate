@@ -32,7 +32,19 @@ export class LocalstorageDBService {
     }
   }
 
-  public setCoinrate(coinsRate: CoinRate[]) {
+  public setCoinrate(coinsRate: any[]) {
+    const coinRateforsave: coinRateforsave[] = coinsRate.map((coinRate) => {
+      return {
+        id: coinRate.id,
+        fromCoinId: coinRate.fromCoinId,
+        toCoinId: coinRate.toCoinId,
+        rate: coinRate.rate,
+        isRate: coinRate.israte,
+      };
+    });
+    localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
+  }
+  public setCoinrate1(coinsRate: CoinRate[]) {
     const coinRateforsave: coinRateforsave[] = coinsRate.map((coinRate) => {
       return {
         id: coinRate.id,
@@ -50,6 +62,7 @@ export class LocalstorageDBService {
       localStorage.getItem('coins-rate')!
     );
     const coins: Coin[] = this.getCoins();
+    if(coinRateFromLocalStorageList){
     const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
       (coinRate) => {
         return {
@@ -62,5 +75,30 @@ export class LocalstorageDBService {
       }
     );
     return coinsRateList;
+  }else{
+    return []
+  }
+  }
+  public getCoinrate1() {
+    const coinRateFromLocalStorageList: coinRateforsave[] = JSON.parse(
+      localStorage.getItem('coins-rate')!
+    );
+    if(coinRateFromLocalStorageList){
+    const coinsRateList: any[] = coinRateFromLocalStorageList.map(
+      (coinRate) => {
+        console.log(coinRate);
+        return {
+          id: coinRate.id,
+          fromCoinId: coinRate.fromCoinId,
+          toCoinId: coinRate.toCoinId,
+          rate: coinRate.rate,
+          israte: coinRate.isRate,
+        };
+      }
+    );
+    return coinsRateList;
+  }else{
+    return []
+  }
   }
 }

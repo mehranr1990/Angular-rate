@@ -15,19 +15,19 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.items = [
             {
-                label: 'COINS',
+                label: ' ارز ها ',
                 icon: 'pi pi-bitcoin',
                 routerLink:'/coins'
                 
             },
             {
-                label: 'COINS RATE',
+                label: 'جدول تبدیل ها',
                 icon: 'pi pi-table',
                 routerLink:'tableRate'
             },
            
             {
-                label: 'RATE EXCHANGE',
+                label: 'ماشین حساب',
                 icon: 'pi pi-dollar',
                 routerLink:'tableRateExchange'
             }

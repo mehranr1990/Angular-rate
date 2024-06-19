@@ -2,10 +2,10 @@
   <p-table [value]="coinsRate" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Buy Price</th>
-        <th>Sell Price</th>
+        <th style="width:25%">ارز اول</th>
+        <th style="width:25%">ارز دوم</th>
+        <th style="width:25%">نرخ تبدیل</th>
+        <th style="width:25%">نرخ تبدیل ریت است؟</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-coinRate>
@@ -35,13 +35,14 @@
         </td>
 
         <td [pEditableColumn]="coinRate.rate" pEditableColumnField="rate">
-          <p-cellEditor >
+          <p-cellEditor>
             <ng-template pTemplate="input">
               <input
-              width="100%"
-              pInputText
+                width="100%"
+                pInputText
                 [(ngModel)]="rateInput"
                 (focus)="onfocus(coinRate)"
+                (select)="true"
                 (keydown.enter)="onRateEdit(coinRate)"
                 (keydown.tab)="onRateEdit(coinRate)"
               />
@@ -60,5 +61,6 @@
       </tr>
     </ng-template>
   </p-table>
-  <p-button (click)="toggleDialog()" label="Add Coin" />
+  <br />
+  <!-- <p-button (click)="toggleDialog()" label="بروز رسانی جدول" /> -->
 </div>
