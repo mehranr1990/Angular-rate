@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {  RouterOutlet } from '@angular/router';
 import { CoinsPageComponent } from './pages/coins-page/coins-page.component';
 import { MenubarModule } from 'primeng/menubar';
+import { CoinsService } from './core/services/coins.service';
+import { CoinRateService } from './core/services/coin-rate.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -12,7 +14,12 @@ import { MenubarModule } from 'primeng/menubar';
 export class AppComponent implements OnInit {
   title = 'Angular-rate';
   items: any;
-    ngOnInit() {
+  constructor(private coinsService: CoinsService,private coinRateService:CoinRateService){
+
+  }
+  ngOnInit() {
+        this.coinsService.getAll();
+        this.coinRateService.getAll();
         this.items = [
             {
                 label: ' ارز ها ',

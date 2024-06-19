@@ -1,29 +1,53 @@
 import { Injectable } from '@angular/core';
-import { CoinsService } from './coins.service';
 import { CoinRate } from '../models/coin-rate.model';
 import { LocalstorageDBService } from './localstorage-db.service';
 import * as uuid from 'uuid';
 import { Coin } from '../models/coin.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { createRateCoin } from '../dtos/create-rateCoin.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoinRateService {
-  private _coinRateList: CoinRate[] = [];
-  public get coinRateList(): CoinRate[] {
+  private _coinRateList: BehaviorSubject<CoinRate[]>  = new BehaviorSubject<CoinRate[]> ([]);
+
+  public get coinRateList(): Observable<CoinRate[]> {
     return this._coinRateList;
   }
 
   constructor(
-    private coinService: CoinsService,
-    private localStorageService: LocalstorageDBService
+    private localStorageService: LocalstorageDBService,
   ) {}
 
   public getAll() {
-    this._coinRateList = this.localStorageService.getCoinrate();
-    return this._coinRateList;
+    this._coinRateList.next(this.localStorageService.getCoinrate1())
   }
+  addCoinToRateList(listcoin:Coin[] ,newCoin:Coin){
+    const newRates: createRateCoin[] = this.localStorageService.getCoinrate1();
+    console.log(newRates);
 
+    listcoin
+      .filter((coin) => newCoin.id !== coin.id)
+      .forEach((selectedCoin) => {
+        newRates.push({
+          id: uuid.v4(),
+          fromCoinId: newCoin.id,
+          toCoinId: selectedCoin.id,
+          rate: 0,
+          isRate: true,
+        });
+        newRates.push({
+          id: uuid.v4(),
+          fromCoinId: selectedCoin.id,
+          toCoinId: newCoin.id,
+          rate: 0,
+          isRate: true,
+        });
+      });
+    this.localStorageService.setCoinrate(newRates);
+
+  }
   // public create() {
   //   let coins:Coin[] = []
   //   this.coinService.getAll();
@@ -51,42 +75,49 @@ export class CoinRateService {
   //   }
   //   this.localStorageService.setCoinrate(this._coinRateList);
   // }
+
+
+// Observable1.pipe(switchMap((observable1Data) => {
+// return Observable2
+// })
+
   
-  public createbycoinadd(addedcoin:Coin){
-    let coins:Coin[] = []
-    this.coinService.getAll();
-    this.coinService.coins.subscribe({next:(coin)=>{
-      coins=coin
-    }})
-    for (let index = 0; index < coins.length; index++) {
-      if(addedcoin.id !== coins[index].id){
-        const newCoinsRate: CoinRate = {
-          id: uuid.v4(),
-          fromCoin: coins[index],
-          toCoin: addedcoin,
-          rate: 0,
-          israte: true,
-        };
-        this._coinRateList = [...this.coinRateList, newCoinsRate];
-        const newCoinsRate1: CoinRate = {
-          id: uuid.v4(),
-          fromCoin: addedcoin,
-          toCoin: coins[index],
-          rate: 0,
-          israte: true,
-        };
-        this._coinRateList = [...this.coinRateList, newCoinsRate1];
-      } 
-    } 
-    this.localStorageService.setCoinrate1(this._coinRateList);
-  }
+  // public createbycoinadd(addedcoin:Coin){
+  //   let coins:Coin[] = []
+  //   this.coinService.getAll();
+  //   this.coinService.coins.subscribe({next:(coin)=>{
+  //     coins=coin
+  //   }})
+  //   for (let index = 0; index < coins.length; index++) {
+  //     if(addedcoin.id !== coins[index].id){
+  //       const newCoinsRate: CoinRate = {
+  //         id: uuid.v4(),
+  //         fromCoin: coins[index],
+  //         toCoin: addedcoin,
+  //         rate: 0,
+  //         israte: true,
+  //       };
+  //       this._coinRateList.next([...this._coinRateList.getValue(), newCoinsRate])
+  //       const newCoinsRate1: CoinRate = {
+  //         id: uuid.v4(),
+  //         fromCoin: addedcoin,
+  //         toCoin: coins[index],
+  //         rate: 0,
+  //         israte: true,
+  //       };
+  //       this._coinRateList.next([...this._coinRateList.getValue(), newCoinsRate1])
+  //     } 
+  //   } 
+  //   this.localStorageService.setCoinrate1(this._coinRateList.getValue());
+  // }
   
-  public update(id: string, rate: number, israte: boolean) {
-  const selectedCoinRate = this._coinRateList.find((coinrate) => coinrate.id === id)!;
+  public update(id: string, rate: number, isRate: boolean) {
+  const selectedCoinRate = this._coinRateList.getValue().find((coinrate) => coinrate.id === id)!;
   console.log(selectedCoinRate);
   selectedCoinRate.rate = rate
-  selectedCoinRate.israte = israte
-  this.localStorageService.setCoinrate1(this._coinRateList)
+  selectedCoinRate.isRate = isRate
+  this.localStorageService.setCoinrate1(this._coinRateList.getValue())
+  this._coinRateList.next(this._coinRateList.getValue())
   return selectedCoinRate
   }
 }

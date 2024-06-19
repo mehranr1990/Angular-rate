@@ -5,5 +5,5 @@ export interface CoinRate {
     fromCoin:Coin
     toCoin:Coin
     rate:number
-    israte:boolean
+    isRate:boolean
 }

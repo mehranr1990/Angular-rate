@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CoinRateService } from './coin-rate.service';
+import { getObservableCoinRate } from './get-observable-coinRate';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalculatorCoinExchangeService {
-  constructor(private coinRateService: CoinRateService) {}
+  constructor(
+    private coinRateService: CoinRateService,
+    private observableCoinRate: getObservableCoinRate
+  ) {}
   private besstprice: any = [];
   public calculateCoinToCoin(isRate: boolean, amount: number, rate: number) {
     if (isRate) {
@@ -135,16 +139,21 @@ export class CalculatorCoinExchangeService {
     }
   }
   public multiple(price: number, amount: number) {
-    return Number((price * amount).toFixed(4)
-  ).toLocaleString('en-US');
+    return Number((price * amount).toFixed(4)).toLocaleString('en-US');
   }
 
   rateCoinfinal: any;
   public bestprice(coinId: string) {
+    let coinRateTable: any = [];
     const rateCoinArr: any = [];
-    const coinRateTable = this.coinRateService.getAll();
+    // this.coinRateService.getAll();
+    this.observableCoinRate.getCoinrate().subscribe({
+      next: (coinRate) => {
+        coinRateTable = coinRate;
+      },
+    });
     const coinrate = coinRateTable.filter(
-      (cointable) => coinId === cointable.toCoin.id
+      (cointable: any) => coinId === cointable.toCoin.id
     );
     for (let index = 0; index < coinrate.length; index++) {
       if (coinrate[index].israte) {
@@ -183,8 +192,7 @@ export class CalculatorCoinExchangeService {
         this.bestprice(rateCoinArr[0].fullcoinRate.fromCoin.id);
       }
     } else {
-      
-      this.rateCoinfinal = []
+      this.rateCoinfinal = [];
       console.log('تو لوپه');
     }
     if (this.besstprice.length > 0) {

@@ -18,6 +18,7 @@ import { ChipModule } from 'primeng/chip';
 import { CurrencyPipe } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CoinChangeCardComponent } from '../../components/coin-change-card/coin-change-card.component';
+import { getObservableCoinRate } from '../../core/services/get-observable-coinRate';
 @Component({
   selector: 'app-coin-table-rate-exchange',
   standalone: true,
@@ -47,19 +48,34 @@ export class CoinTableRateExchangeComponent {
   constructor(
     private coinsService: CoinsService,
     private coinRateService: CoinRateService,
-    public readonly calculator: CalculatorCoinExchangeService
+    public readonly calculator: CalculatorCoinExchangeService,
+    private observableCoinRate: getObservableCoinRate
   ) {}
 
   expandedRows = {};
 
   ngOnInit(): void {
-    this.coinsService.getAll();
+    this.observableCoinRate.getCoinrate().subscribe({
+      next: (resp) => {
+        console.log(resp);
+      },
+    });
+    // this.coinsService.getAll();
     this.coinsService.coins.subscribe({
       next: (coins) => {
         this.coins = coins;
       },
     });
-    this.coinsRate = this.coinRateService.getAll();
+
+    this.coinsRate = [];
+    // this.coinRateService.getAll();
+    this.observableCoinRate.getCoinrate().subscribe({
+      next: (coinRate) => {
+        this.coinsRate = coinRate;
+      },
+    });
+    console.log(this.coinsRate);
+    
     this.coinsCards = this.coins.map((coin: Coin) => {
       return {
         ...coin,
@@ -70,11 +86,11 @@ export class CoinTableRateExchangeComponent {
   }
 
   changeAmount(payload: any) {
-    const coin = this.coinsCards.find(coin=>coin.id === payload.coin.id)
-    coin.amount = payload.amount
+    const coin = this.coinsCards.find((coin) => coin.id === payload.coin.id);
+    coin.amount = payload.amount;
   }
-  changeExchangeStatus(payload: any){
-    const coin = this.coinsCards.find(coin=>coin.id === payload.coin.id)
-    coin.exchangeStatus = payload.exchangeStatus
+  changeExchangeStatus(payload: any) {
+    const coin = this.coinsCards.find((coin) => coin.id === payload.coin.id);
+    coin.exchangeStatus = payload.exchangeStatus;
   }
 }

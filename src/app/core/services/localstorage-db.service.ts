@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Coin } from '../models/coin.model';
 import { CoinRate } from '../models/coin-rate.model';
 import { createRateCoin } from '../dtos/create-rateCoin.dto';
+import { CoinsService } from './coins.service';
+import { CoinRateService } from './coin-rate.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,46 +35,49 @@ export class LocalstorageDBService {
         fromCoinId: coinRate.fromCoinId,
         toCoinId: coinRate.toCoinId,
         rate: coinRate.rate,
-        isRate: coinRate.israte,
+        isRate: coinRate.isRate,
       };
     });
     localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
   }
-  public setCoinrate1(coinsRate: CoinRate[]) {
+  public setCoinrate1(coinsRate: any[]) {
     const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
       return {
         id: coinRate.id,
-        fromCoinId: coinRate.fromCoin.id,
-        toCoinId: coinRate.toCoin.id,
+        fromCoinId: coinRate.fromCoinId,
+        toCoinId: coinRate.toCoinId,
         rate: coinRate.rate,
-        isRate: coinRate.israte,
+        isRate: coinRate.isRate,
       };
     });
     localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
   }
 
-  public getCoinrate() {
-    const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
-      localStorage.getItem('coins-rate')!
-    );
-    const coins: Coin[] = this.getCoins();
-    if(coinRateFromLocalStorageList){
-    const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
-      (coinRate) => {
-        return {
-          id: coinRate.id,
-          fromCoin: coins.find((coin) => coin.id === coinRate.fromCoinId)!,
-          toCoin: coins.find((coin) => coin.id === coinRate.toCoinId)!,
-          rate: coinRate.rate,
-          israte: coinRate.isRate,
-        };
-      }
-    );
-    return coinsRateList;
-  }else{
-    return []
-  }
-  }
+  // public getCoinrate() {
+  //   const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
+  //     localStorage.getItem('coins-rate')!
+  //   );
+  //   const coins: Coin[] = this.getCoins();
+  //   if(coinRateFromLocalStorageList){
+  //   const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
+  //     (coinRate) => {
+  //       return {
+  //         id: coinRate.id,
+  //         fromCoin: coins.find((coin) => coin.id === coinRate.fromCoinId)!,
+  //         toCoin: coins.find((coin) => coin.id === coinRate.toCoinId)!,
+  //         rate: coinRate.rate,
+  //         israte: coinRate.isRate,
+  //       };
+  //     }
+  //   );
+  //   return coinsRateList;
+  // }else{
+  //   return []
+  // }
+  // }
+ 
+
+
   public getCoinrate1() {
     const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
       localStorage.getItem('coins-rate')!
@@ -80,16 +85,16 @@ export class LocalstorageDBService {
     if(coinRateFromLocalStorageList){
     const coinsRateList: any[] = coinRateFromLocalStorageList.map(
       (coinRate) => {
-        console.log(coinRate);
         return {
           id: coinRate.id,
           fromCoinId: coinRate.fromCoinId,
           toCoinId: coinRate.toCoinId,
           rate: coinRate.rate,
-          israte: coinRate.isRate,
+          isRate: coinRate.isRate,
         };
       }
     );
+    
     return coinsRateList;
   }else{
     return []

@@ -122,7 +122,7 @@
                       <p-chip
                         [label]="
                           calculator.calculateCoinToCoin(
-                            coinRate.israte,
+                            coinRate.isRate,
                             coin.amount,
                             coinRate.rate
                           ) +
@@ -150,7 +150,7 @@
                           {{
                             " : " +
                               calculator.calculateCoinprice(
-                                coinRate.israte,
+                                coinRate.isRate,
                                 coin.buyprice,
 
                                 coinRate.rate
@@ -164,7 +164,7 @@
                   <td>
                     <!-- <span>{{
                           calculator.calculatepricedifference(
-                            coinRate.israte,
+                            coinRate.isRate,
                             coin.buyprice,
                             coinRate.rate,
                             coin.sellprice,
@@ -200,7 +200,7 @@
                       <p-chip
                         [label]="
                           calculator.calculateGivetoGet(
-                            coinRate.israte,
+                            coinRate.isRate,
                             coin.amount,
                             coinRate.rate
                           ) +
@@ -239,7 +239,7 @@
                           {{
                             " : " +
                               calculator.calculateCoinprice2(
-                                coinRate.israte,
+                                coinRate.isRate,
                                 coinRate.fromCoin.buyprice,
                                 coinRate.rate
                               )
@@ -252,7 +252,7 @@
                   <td>
                     <span>{{
                       calculator.calculatesellbuyprice(
-                        coinRate.israte,
+                        coinRate.isRate,
                         coin.amount,
                         coinRate.rate,
                         coinRate.fromCoin.buyprice
@@ -265,7 +265,7 @@
                   <td>
                     <!-- <span>{{
                         calculator.calculateprofitofselleng(
-                          coinRate.israte,
+                          coinRate.isRate,
                           coin.amount,
                           coinRate.rate,
                           coinRate.fromCoin.buyprice,

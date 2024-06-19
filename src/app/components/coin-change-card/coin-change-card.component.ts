@@ -60,35 +60,35 @@ export class CoinChangeCardComponent implements OnInit {
 
   buyInputChenge() {
     this.coinsService.update(this.coin.id, this.coin.buyprice, this.coin.sellprice);
-    if (this.stateOptions) {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].fromCoin.id === this.coin.id) {
-          this.coinsRate[index].fromCoin.buyprice = this.coin.buyprice;
-        }
-      }
-    } else {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].toCoin.id === this.coin.id) {
-          this.coinsRate[index].toCoin.buyprice = this.coin.buyprice;
-        }
-      }
-    }
+    // if (this.stateOptions) {
+    //   for (let index = 0; index < this.coinsRate.length; index++) {
+    //     if (this.coinsRate[index].fromCoin.id === this.coin.id) {
+    //       this.coinsRate[index].fromCoin.buyprice = this.coin.buyprice;
+    //     }
+    //   }
+    // } else {
+    //   for (let index = 0; index < this.coinsRate.length; index++) {
+    //     if (this.coinsRate[index].toCoin.id === this.coin.id) {
+    //       this.coinsRate[index].toCoin.buyprice = this.coin.buyprice;
+    //     }
+    //   }
+    // }
   }
-  sellInputChenge(event: any, e: Coin) {
-    this.coinsService.update(e.id, e.buyprice, event.target.value);
-    if (this.stateOptions) {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].fromCoin.id === e.id) {
-          this.coinsRate[index].fromCoin.sellprice = event.target.value;
-        }
-      }
-    } else {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].toCoin.id === e.id) {
-          this.coinsRate[index].toCoin.sellprice = event.target.value;
-        }
-      }
-    }
+  sellInputChenge() {
+    this.coinsService.update(this.coin.id, this.coin.buyprice, this.coin.sellprice);
+    // if (this.stateOptions) {
+    //   for (let index = 0; index < this.coinsRate.length; index++) {
+    //     if (this.coinsRate[index].fromCoin.id === e.id) {
+    //       this.coinsRate[index].fromCoin.sellprice = event.target.value;
+    //     }
+    //   }
+    // } else {
+    //   for (let index = 0; index < this.coinsRate.length; index++) {
+    //     if (this.coinsRate[index].toCoin.id === e.id) {
+    //       this.coinsRate[index].toCoin.sellprice = event.target.value;
+    //     }
+    //   }
+    // }
   }
 
   onAmountChange() {

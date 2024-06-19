@@ -15,7 +15,7 @@ export class TableCoinsComponent {
   coins: Coin[] = [];
 
   ngOnInit(): void {
-    this.coinsService.getAll();
+    // this.coinsService.getAll();
     this.coinsService.coins.subscribe({
       next: (coins: Coin[]) => {
         this.coins = coins;
