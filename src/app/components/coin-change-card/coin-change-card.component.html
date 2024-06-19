@@ -1,0 +1,74 @@
+<div class="pr-8">
+
+<div class="col-12 md:col-6 lg:col-4 xl:col-3">
+    <p-card [header]="coinsCards.name" class="djcc">
+      <ng-template pTemplate="header" class="djcc">
+        <img
+          alt="Card"
+          [src]="coinsCards.image"
+          class="imgwidth"
+          (click)="calcutebestpriceforthiscoin(coinsCards.id)"
+        />
+      </ng-template>
+      <div class="centerinput mb-5">
+        <app-best-price-modal
+          [id]="coinsCards.id"
+        ></app-best-price-modal>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="">
+          <div class="center-span mb-2">
+            <p-floatLabel>
+              <input
+                id="Amount"
+                type="text"
+                pInputText
+                [(ngModel)]="coinsCards.amount"
+              />
+              <label for="Amount">مقدار</label>
+            </p-floatLabel>
+          </div>
+          <div class="centerinput mb-5" dir="ltr">
+            <p-selectButton
+              [options]="stateOptions"
+              [(ngModel)]="coinsCards.exchangeStatus"
+              optionLabel="label"
+              optionValue="value"
+            />
+          </div>
+          <div class="center-span mb-5">
+            <p-floatLabel>
+              <input
+                id="Buy"
+                type="text"
+                pInputText
+                [(ngModel)]="coinsCards.buyprice"
+                (input)="buyInputChenge($event, coinsCards)"
+              />
+              <label for="Buy">قیمت خرید</label>
+            </p-floatLabel>
+          </div>
+          <p-floatLabel>
+            <input
+              id="Sell"
+              type="text"
+              pInputText
+              [(ngModel)]="coinsCards.sellprice"
+              (input)="sellInputChenge($event, coinsCards)"
+            />
+            <label for="Sell">قیمت فروش</label>
+          </p-floatLabel>
+        </div>
+        <!-- <div class="flex gap-3 mt-1">
+          <p-button
+            label="Cancel"
+            severity="secondary"
+            class="w-full"
+            styleClass="w-full"
+          />
+          <p-button label="Save" class="w-full" styleClass="w-full" />
+        </div> -->
+      </ng-template>
+    </p-card>
+  </div>
+  </div>

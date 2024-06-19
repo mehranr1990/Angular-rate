@@ -10,19 +10,20 @@ import { Coin } from '../models/coin.model';
 })
 export class CoinRateService {
   private _coinRateList: CoinRate[] = [];
-
   public get coinRateList(): CoinRate[] {
     return this._coinRateList;
   }
+
   constructor(
     private coinService: CoinsService,
     private localStorageService: LocalstorageDBService
   ) {}
+
   public getAll() {
     this._coinRateList = this.localStorageService.getCoinrate();
-
     return this._coinRateList;
   }
+
   // public create() {
   //   let coins:Coin[] = []
   //   this.coinService.getAll();
@@ -76,19 +77,16 @@ export class CoinRateService {
         };
         this._coinRateList = [...this.coinRateList, newCoinsRate1];
       } 
-    }
-    
+    } 
     this.localStorageService.setCoinrate1(this._coinRateList);
   }
-
+  
   public update(id: string, rate: number, israte: boolean) {
   const selectedCoinRate = this._coinRateList.find((coinrate) => coinrate.id === id)!;
   console.log(selectedCoinRate);
-  
   selectedCoinRate.rate = rate
   selectedCoinRate.israte = israte
   this.localStorageService.setCoinrate1(this._coinRateList)
   return selectedCoinRate
-
   }
 }

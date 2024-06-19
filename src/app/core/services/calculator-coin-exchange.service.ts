@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CoinRateService } from './coin-rate.service';
-import { filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

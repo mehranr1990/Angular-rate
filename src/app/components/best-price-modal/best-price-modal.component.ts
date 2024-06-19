@@ -15,15 +15,12 @@ export class BestPriceModalComponent {
   constructor(private calculator: CalculatorCoinExchangeService) {}
   visible: boolean = false;
   position: string = 'center';
-  name1 :string='sdfsd'
+  name1 :string=''
   array:any[]=[]
   @Input() id: string = '';
   showDialog(position: string) {
-    
     this.array =  this.calculator.bestprice(this.id);
     console.log(this.array);
-    
-    
     this.position = position;
     this.visible = true;
   }

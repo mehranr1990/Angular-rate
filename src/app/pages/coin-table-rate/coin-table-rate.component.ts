@@ -27,12 +27,7 @@ export class CoinTableRateComponent implements OnInit {
   isRateChecked :boolean =true
   ngOnInit(): void {
     this.coinsRate = this.coinRateService.getAll();
-    
-    
   }
-  // toggleDialog() {
-  //   this.coinRateService.create();
-  // }
   onfocus(e:CoinRate){
     this.rateInput = e.rate 
   }

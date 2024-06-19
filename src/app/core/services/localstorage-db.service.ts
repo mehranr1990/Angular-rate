@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Coin } from '../models/coin.model';
 import { CoinRate } from '../models/coin-rate.model';
+import { createRateCoin } from '../dtos/create-rateCoin.dto';
 
-interface coinRateforsave {
-  id: string;
-  fromCoinId: string;
-  toCoinId: String;
-  rate: number;
-  isRate: boolean;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +27,7 @@ export class LocalstorageDBService {
   }
 
   public setCoinrate(coinsRate: any[]) {
-    const coinRateforsave: coinRateforsave[] = coinsRate.map((coinRate) => {
+    const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
       return {
         id: coinRate.id,
         fromCoinId: coinRate.fromCoinId,
@@ -45,7 +39,7 @@ export class LocalstorageDBService {
     localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
   }
   public setCoinrate1(coinsRate: CoinRate[]) {
-    const coinRateforsave: coinRateforsave[] = coinsRate.map((coinRate) => {
+    const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
       return {
         id: coinRate.id,
         fromCoinId: coinRate.fromCoin.id,
@@ -58,7 +52,7 @@ export class LocalstorageDBService {
   }
 
   public getCoinrate() {
-    const coinRateFromLocalStorageList: coinRateforsave[] = JSON.parse(
+    const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
       localStorage.getItem('coins-rate')!
     );
     const coins: Coin[] = this.getCoins();
@@ -80,7 +74,7 @@ export class LocalstorageDBService {
   }
   }
   public getCoinrate1() {
-    const coinRateFromLocalStorageList: coinRateforsave[] = JSON.parse(
+    const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
       localStorage.getItem('coins-rate')!
     );
     if(coinRateFromLocalStorageList){

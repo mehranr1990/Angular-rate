@@ -11,17 +11,13 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { CalculatorCoinExchangeService } from '../../core/services/calculator-coin-exchange.service';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { BestPriceModalComponent } from '../../components/best-price-modal/best-price-modal.component';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { ChipModule } from 'primeng/chip';
 import { CurrencyPipe } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
-interface CoinRateExchange {
-  coin: Coin;
-  amount: number;
-}
+import {CoinChangeCardComponent} from '../../components/coin-change-card/coin-change-card.component'
 @Component({
   selector: 'app-coin-table-rate-exchange',
   standalone: true,
@@ -38,37 +34,32 @@ interface CoinRateExchange {
     ChipModule,
     CurrencyPipe,
     SelectButtonModule,
-    BestPriceModalComponent
+    BestPriceModalComponent,
+    CoinChangeCardComponent
   ],
   templateUrl: './coin-table-rate-exchange.component.html',
   styleUrl: './coin-table-rate-exchange.component.scss',
 })
 export class CoinTableRateExchangeComponent {
-  sellInput: number = 0;
-  coinsCards: any = [];
+  coinsCards: any[] = [];
+  coins: Coin[] = [];
+  coinsRate: CoinRate[] = [];
   constructor(
-
     private coinsService: CoinsService,
     private coinRateService: CoinRateService,
     public readonly calculator: CalculatorCoinExchangeService
-  ) {}
-  coins: Coin[] = [];
-  coinsRate: CoinRate[] = [];
-  stateOptions: any[] = [
-    { label: 'بگیریم', value: 1 },
-    { label: 'بدهیم', value: 0 },
-  ];
-  value: string = 'off';
-  expandedRows = {};
-  calcutebestpriceforthiscoin(e:any){
     
-    this.calculator.bestprice(e)
-  }
+  ) {}
+
+  expandedRows = {};
+
   ngOnInit(): void {
     this.coinsService.getAll();
-    this.coinsService.coins.subscribe({next:(coins=>{
-      this.coins = coins
-    })})
+    this.coinsService.coins.subscribe({
+      next: (coins) => {
+        this.coins = coins;
+      },
+    });
     this.coinsRate = this.coinRateService.getAll();
     this.coinsCards = this.coins.map((coin: Coin) => {
       return {
@@ -77,38 +68,5 @@ export class CoinTableRateExchangeComponent {
         exchangeStatus: 0,
       };
     });
-  }
-  buyInputChenge(event: any, e: Coin) {
-    this.coinsService.update(e.id, event.target.value, e.sellprice);
-    if (this.stateOptions) {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].fromCoin.id === e.id) {
-          this.coinsRate[index].fromCoin.buyprice = event.target.value;
-        }
-      }
-    } else {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].toCoin.id === e.id) {
-          this.coinsRate[index].toCoin.buyprice = event.target.value;
-        }
-      }
-    }
-  }
-  sellInputChenge(event: any, e: Coin) {
-    this.coinsService.update(e.id, e.buyprice, event.target.value);
-    if (this.stateOptions) {
-      
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].fromCoin.id === e.id) {
-          this.coinsRate[index].fromCoin.sellprice = event.target.value;
-        }
-      }
-    } else {
-      for (let index = 0; index < this.coinsRate.length; index++) {
-        if (this.coinsRate[index].toCoin.id === e.id) {
-          this.coinsRate[index].toCoin.sellprice = event.target.value;
-        }
-      }
-    }
   }
 }
