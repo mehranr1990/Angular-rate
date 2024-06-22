@@ -1,5 +1,5 @@
 <div class="p-8">
-  <p-table [value]="coinsRate" [tableStyle]="{ 'min-width': '50rem' }">
+  <p-table [value]="coinsRate" [tableStyle]="{ 'min-width': '50rem' }" [rowTrackBy]="trackById">
     <ng-template pTemplate="header">
       <tr>
         <th style="width:25%">ارز اول</th>
@@ -14,7 +14,7 @@
           <span class="inline-flex align-items-center gap-2">
             <img
               [src]="coinRate.fromCoin.image"
-              [alt]="coinRate.name"
+              [alt]="coinRate.fromCoin.name"
               width="24"
               class=""
             />
@@ -26,7 +26,7 @@
           <span class="inline-flex align-items-center gap-2">
             <img
               [src]="coinRate.toCoin.image"
-              [alt]="coinRate.name"
+              [alt]="coinRate.toCoin.name"
               width="24"
               class=""
             />
@@ -38,11 +38,11 @@
           <p-cellEditor>
             <ng-template pTemplate="input">
               <input
+              #rateInputRef
                 width="100%"
                 pInputText
                 [(ngModel)]="rateInput"
-                (focus)="onfocus(coinRate)"
-                (select)="true"
+                (focus)="onfocus($event,coinRate)"
                 (keydown.enter)="onRateEdit(coinRate)"
                 (keydown.tab)="onRateEdit(coinRate)"
               />
@@ -55,7 +55,7 @@
         <td>
           <p-inputSwitch
             [(ngModel)]="coinRate.isRate"
-            (onChange)="onisRateEdit(coinRate)"
+            (ngModelChange)="onisRateEdit(coinRate)"
           />
         </td>
       </tr>

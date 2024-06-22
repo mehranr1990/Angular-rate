@@ -35,9 +35,9 @@ export class getObservableCoinRate {
               return {
                 id: coinRate.id,
                 fromCoin: resp.find(
-                  (coin) => coin.id === coinRate.fromCoinId
+                  (coin) => coin.id === coinRate.fromCoin
                 )!,
-                toCoin: resp.find((coin) => coin.id === coinRate.toCoinId)!,
+                toCoin: resp.find((coin) => coin.id === coinRate.toCoin)!,
                 rate: coinRate.rate,
                 isRate: coinRate.isRate,
               };

@@ -28,30 +28,30 @@ export class LocalstorageDBService {
     }
   }
 
-  public setCoinrate(coinsRate: any[]) {
-    const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
+  public setCoinrate(coinsRate: CoinRate[]) {
+    const coinRateforsave: CoinRate[] = coinsRate.map((coinRate) => {
       return {
         id: coinRate.id,
-        fromCoinId: coinRate.fromCoinId,
-        toCoinId: coinRate.toCoinId,
+        fromCoin: coinRate.fromCoin,
+        toCoin: coinRate.toCoin,
         rate: coinRate.rate,
         isRate: coinRate.isRate,
       };
     });
     localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
   }
-  public setCoinrate1(coinsRate: any[]) {
-    const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
-      return {
-        id: coinRate.id,
-        fromCoinId: coinRate.fromCoinId,
-        toCoinId: coinRate.toCoinId,
-        rate: coinRate.rate,
-        isRate: coinRate.isRate,
-      };
-    });
-    localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
-  }
+  // public setCoinrate1(coinsRate: any[]) {
+  //   const coinRateforsave: createRateCoin[] = coinsRate.map((coinRate) => {
+  //     return {
+  //       id: coinRate.id,
+  //       fromCoinId: coinRate.fromCoinId,
+  //       toCoinId: coinRate.toCoinId,
+  //       rate: coinRate.rate,
+  //       isRate: coinRate.isRate,
+  //     };
+  //   });
+  //   localStorage.setItem('coins-rate', JSON.stringify(coinRateforsave));
+  // }
 
   // public getCoinrate() {
   //   const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
@@ -79,16 +79,16 @@ export class LocalstorageDBService {
 
 
   public getCoinrate1() {
-    const coinRateFromLocalStorageList: createRateCoin[] = JSON.parse(
+    const coinRateFromLocalStorageList: CoinRate[] = JSON.parse(
       localStorage.getItem('coins-rate')!
     );
     if(coinRateFromLocalStorageList){
-    const coinsRateList: any[] = coinRateFromLocalStorageList.map(
+    const coinsRateList: CoinRate[] = coinRateFromLocalStorageList.map(
       (coinRate) => {
         return {
           id: coinRate.id,
-          fromCoinId: coinRate.fromCoinId,
-          toCoinId: coinRate.toCoinId,
+          fromCoin: coinRate.fromCoin,
+          toCoin: coinRate.toCoin,
           rate: coinRate.rate,
           isRate: coinRate.isRate,
         };

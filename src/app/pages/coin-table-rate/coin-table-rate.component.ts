@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CoinRateService } from '../../core/services/coin-rate.service';
@@ -22,29 +22,39 @@ import { getObservableCoinRate } from '../../core/services/get-observable-coinRa
   styleUrl: './coin-table-rate.component.scss',
 })
 export class CoinTableRateComponent implements OnInit {
-  constructor(private coinRateService: CoinRateService, private observableCoinRate: getObservableCoinRate) {}
+  constructor(
+    private coinRateService: CoinRateService,
+    private observableCoinRate: getObservableCoinRate
+  ) {}
   coinsRate: CoinRate[] = [];
   rateInput: number = 0;
-  isRateChecked :boolean =true
+  isRateChecked: boolean = true;
   ngOnInit(): void {
-    this.coinsRate = []
+    this.coinsRate = [];
     // this.coinRateService.getAll();
     this.observableCoinRate.getCoinrate().subscribe({
-      next:(coinRate)=>{
-      this.coinsRate = coinRate
-    }
-  })
+      next: (coinRate) => {
+        this.coinsRate = coinRate;
+      },
+    });
   }
-  onfocus(e:CoinRate){
-    this.rateInput = e.rate 
+
+  @ViewChild('rateInputRef') rateInputRef: ElementRef<HTMLInputElement>;
+
+  onfocus(event: Event, e: CoinRate) {
+    this.rateInput = e.rate;
+    
   }
   onRateEdit(e: CoinRate) {
     console.log(this.rateInput);
-    console.log(e.id);
-    
     this.coinRateService.update(e.id, this.rateInput, e.isRate);
   }
-  onisRateEdit(e: CoinRate) {    
+  onisRateEdit(e: CoinRate) {
     this.coinRateService.update(e.id, e.rate, e.isRate);
+  }
+
+  trackById(index: number, el: any) {
+    console.log(el);
+    return el.id;
   }
 }
