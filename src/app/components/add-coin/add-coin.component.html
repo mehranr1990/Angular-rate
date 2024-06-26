@@ -17,7 +17,18 @@
         formControlName="name"
       />
     </div>
-    @if (!imageUploaded) {
+
+        <div class="flex align-items-center gap-3 mb-3">
+      <label for="image" class="font-semibold w-6rem">آدرس عکس</label>
+      <input
+        pInputText
+        id="image"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="image"
+      />
+     </div>
+   <!-- @if (!imageUploaded) {
     <p-fileUpload
       chooseLabel="انتخاب"
       chooseIcon="pi pi-upload"
@@ -32,7 +43,7 @@
     <div class="flex justify-content-center">
       <p-image [src]="addCoinFormGroup.value.image" alt="Image" width="250" />
     </div>
-    }
+    } -->
 
     <!-- <div class="flex align-items-center gap-3 mb-5">
       <label for="email" class="font-semibold w-6rem">Email</label>

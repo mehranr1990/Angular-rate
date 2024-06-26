@@ -4,7 +4,7 @@ import { LocalstorageDBService } from './localstorage-db.service';
 import * as uuid from 'uuid';
 import { Coin } from '../models/coin.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { createRateCoin } from '../dtos/create-rateCoin.dto';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,35 +18,51 @@ export class CoinRateService {
     return this._coinRateList;
   }
 
-  constructor(private localStorageService: LocalstorageDBService) {}
+  constructor(
+    private localStorageService: LocalstorageDBService,
+    private api: ApiService
+  ) {}
 
   public getAll() {
-    this._coinRateList.next(this.localStorageService.getCoinrate1());
+    return this.api.get('coin-rate/find-all');
+    // this._coinRateList.next(this.localStorageService.getCoinrate1());
   }
   addCoinToRateList(listcoin: Coin[], newCoin: Coin) {
-    const newRates: CoinRate[] = this.localStorageService.getCoinrate1();
-    console.log(newRates);
-
+    let newRates: any = [];
+    this.getAll().subscribe({
+      next: (all) => {
+        newRates = all;
+      },
+    });
     listcoin
       .filter((coin) => newCoin.id !== coin.id)
       .forEach((selectedCoin) => {
-        newRates.push({
-          id: uuid.v4(),
+        const rate1 = {
           fromCoin: newCoin.id,
           toCoin: selectedCoin.id,
           rate: 0,
-          isRate: true,
-        });
-        newRates.push({
-          id: uuid.v4(),
+          isRate: 1,
+        };
+        console.log(rate1);
+        
+        this.api.post('coin-rate', rate1);
+        newRates.push(rate1);
+        const rate2 = {
           fromCoin: selectedCoin.id,
           toCoin: newCoin.id,
           rate: 0,
-          isRate: true,
-        });
+          isRate: 1,
+        };
+        newRates.push(rate2);
+        this.api.post('coin-rate', rate2);
       });
     this._coinRateList.next(newRates);
-    this.localStorageService.setCoinrate(newRates);
+      for (let index = 0; index < newRates.length; index++) {
+        
+        return this.api.post('coin-rate', newRates[index]);
+      }
+    return this.api.post('', newRates);
+    // this.localStorageService.setCoinrate(newRates);
   }
   // public create() {
   //   let coins:Coin[] = []
@@ -113,13 +129,12 @@ export class CoinRateService {
     const selectedCoinRate = this._coinRateList
       .getValue()
       .find((coinrate) => coinrate.id === id)!;
-    console.log(selectedCoinRate);
+    // console.log(selectedCoinRate);
     selectedCoinRate.rate = rate;
     selectedCoinRate.isRate = isRate;
-    this.localStorageService.setCoinrate(this._coinRateList.getValue());
-    console.log(this._coinRateList.getValue());
-    // TODO
-    this._coinRateList.next(this._coinRateList.getValue())
-    return selectedCoinRate;
+    // this.localStorageService.setCoinrate(this._coinRateList.getValue());
+    this._coinRateList.next(this._coinRateList.getValue());
+    return this.api.put('coin-rate/update', this._coinRateList.getValue);
+    // return selectedCoinRate;
   }
 }

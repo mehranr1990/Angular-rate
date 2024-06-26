@@ -46,7 +46,7 @@ export class CoinTableRateComponent implements OnInit {
     
   }
   onRateEdit(e: CoinRate) {
-    console.log(this.rateInput);
+    // console.log(this.rateInput);
     this.coinRateService.update(e.id, this.rateInput, e.isRate);
   }
   onisRateEdit(e: CoinRate) {
@@ -54,7 +54,7 @@ export class CoinTableRateComponent implements OnInit {
   }
 
   trackById(index: number, el: any) {
-    console.log(el);
+    // console.log(el);
     return el.id;
   }
 }

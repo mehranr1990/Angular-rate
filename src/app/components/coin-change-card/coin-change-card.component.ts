@@ -53,29 +53,30 @@ export class CoinChangeCardComponent implements OnInit {
   sellInput: number = 0;
   calcutebestpriceforthiscoin(e: any) {
     this.calculator.bestprice(e);
+    
   }
   ngOnInit() {
 
   }
 
   buyInputChenge() {
-    this.coinsService.update(this.coin.id, this.coin.buyprice, this.coin.sellprice);
+    this.coinsService.update(this.coin.id, +this.coin.buyPrice, +this.coin.sellPrice);
     // if (this.stateOptions) {
     //   for (let index = 0; index < this.coinsRate.length; index++) {
     //     if (this.coinsRate[index].fromCoin.id === this.coin.id) {
-    //       this.coinsRate[index].fromCoin.buyprice = this.coin.buyprice;
+    //       this.coinsRate[index].fromCoin.buyPrice = this.coin.buyPrice;
     //     }
     //   }
     // } else {
     //   for (let index = 0; index < this.coinsRate.length; index++) {
     //     if (this.coinsRate[index].toCoin.id === this.coin.id) {
-    //       this.coinsRate[index].toCoin.buyprice = this.coin.buyprice;
+    //       this.coinsRate[index].toCoin.buyPrice = this.coin.buyPrice;
     //     }
     //   }
     // }
   }
   sellInputChenge() {
-    this.coinsService.update(this.coin.id, this.coin.buyprice, this.coin.sellprice);
+    this.coinsService.update(this.coin.id, +this.coin.buyPrice, +this.coin.sellPrice);
     // if (this.stateOptions) {
     //   for (let index = 0; index < this.coinsRate.length; index++) {
     //     if (this.coinsRate[index].fromCoin.id === e.id) {

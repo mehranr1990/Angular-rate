@@ -156,7 +156,8 @@ export class CalculatorCoinExchangeService {
       (cointable: any) => coinId === cointable.toCoin.id
     );
     for (let index = 0; index < coinrate.length; index++) {
-      if (coinrate[index].israte) {
+      if (coinrate[index].isRate) {
+        
         rateCoinArr.push({
           priceafter: Number(
             (1 / (1 + coinrate[index].rate / 100)) *

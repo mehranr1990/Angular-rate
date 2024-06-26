@@ -57,7 +57,7 @@ export class CoinTableRateExchangeComponent {
   ngOnInit(): void {
     this.observableCoinRate.getCoinrate().subscribe({
       next: (resp) => {
-        console.log(resp);
+        // console.log(resp);
       },
     });
     // this.coinsService.getAll();
@@ -74,7 +74,7 @@ export class CoinTableRateExchangeComponent {
         this.coinsRate = coinRate;
       },
     });
-    console.log(this.coinsRate);
+    // console.log(this.coinsRate);
     
     this.coinsCards = this.coins.map((coin: Coin) => {
       return {

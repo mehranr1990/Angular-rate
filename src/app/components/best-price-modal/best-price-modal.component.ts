@@ -20,7 +20,7 @@ export class BestPriceModalComponent {
   @Input() id: string = '';
   showDialog(position: string) {
     this.array =  this.calculator.bestprice(this.id);
-    console.log(this.array);
+    // console.log(this.array);
     this.position = position;
     this.visible = true;
   }

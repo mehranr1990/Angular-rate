@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Coin } from '../models/coin.model';
 import { CoinRate } from '../models/coin-rate.model';
-import { createRateCoin } from '../dtos/create-rateCoin.dto';
 import { CoinsService } from './coins.service';
 import { CoinRateService } from './coin-rate.service';
 

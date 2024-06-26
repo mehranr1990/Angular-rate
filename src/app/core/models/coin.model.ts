@@ -2,8 +2,8 @@ export interface Coin {
     id:string
     name:string
     image:string
-    buyprice:number
-    sellprice:number
+    buyPrice:number|string
+    sellPrice:number|string
 }
 
 
