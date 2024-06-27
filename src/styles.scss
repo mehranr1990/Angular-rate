@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../public/assets/styles/font.css';
+@import "../public/assets/styles/font.css";
 @import "primeicons/primeicons.css";
 // @import "primeng/resources/themes/vela-blue/theme.css";
 
-*{
+* {
   font-family: iransans;
+  font-size: 14px;
 }
 
 table {
@@ -17,8 +18,7 @@ table {
 }
 
 .p-chip {
-
-    padding: 0 .25rem 0 .5rem;
+  padding: 0 0.25rem 0 0.5rem;
   img {
     width: 25px;
     height: 25px;
@@ -27,7 +27,17 @@ table {
   }
 
   .p-chip-text {
-    margin: .25rem 0;
+    margin: 0.25rem 0;
     font-family: monospace;
+  }
+}
+
+.p-card-body {
+  .p-card-content {
+    padding: 0;
+  }
+
+  .p-card-footer {
+    padding: 0;
   }
 }

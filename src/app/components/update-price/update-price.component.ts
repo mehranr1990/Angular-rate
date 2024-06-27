@@ -12,6 +12,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { CoinsService } from '../../core/services/coins.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-update-price',
@@ -24,6 +25,7 @@ import { CoinsService } from '../../core/services/coins.service';
     InputTextModule,
     FileUploadModule,
     ImageModule,
+    TooltipModule
   ],
   templateUrl: './update-price.component.html',
   styleUrl: './update-price.component.scss',

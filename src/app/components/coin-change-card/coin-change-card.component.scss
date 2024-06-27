@@ -1,38 +1,43 @@
 :host {
-    .imgwidth {
-      margin-top: 5px;
-      width: 100px !important;
-    }
-    .djcc {
-      display: flex;
-      justify-content: center;
-    }
-  
-    ::ng-deep .p-card-header {
-      display: flex !important;
-      justify-content: center !important;
-    }
-    ::ng-deep .p-float-label > label{
-      right: 0.75rem;
-      left: 0;
-    }
-    .center-span {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .centerinput{
-      display: flex;
-      justify-content: center;
-    }
-    .center {
-      display: inline-flex;
-      align-items: center;
-    }
-    .center1{
-      
-      display: inline-flex; 
-      margin: '0 4px'
-      }
+  .imgwidth {
+    margin-top: 5px;
+    width: 100px !important;
   }
-  
+  .djcc {
+    display: flex;
+    justify-content: center;
+  }
+
+  ::ng-deep .p-card-header {
+    display: flex !important;
+    justify-content: center !important;
+  }
+  ::ng-deep .p-float-label > label {
+    right: 0.75rem;
+    left: 0;
+  }
+  .center-span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .centerinput {
+    display: flex;
+    justify-content: center;
+  }
+  .center {
+    display: inline-flex;
+    align-items: center;
+  }
+  .center1 {
+    display: inline-flex;
+    margin: "0 4px";
+  }
+
+  ::ng-deep .custom-select-button {
+    div.p-button:last-child {
+      border-radius: 0 !important;
+      border-right: none !important;
+    }
+  }
+}

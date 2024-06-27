@@ -1,8 +1,4 @@
-<i
-  class="pi pi-star-fill"
-  style="color: 'var(--primary-color)'"
-  (click)="showDialog('top')"
-></i>
+<p-button icon="pi pi-star-fill" [rounded]="true" size="small" [outlined]="true" (click)="showDialog('top')" pTooltip="بهترین قیمت خرید" tooltipPosition="bottom"/>
 <p-dialog
   header="بهترین حالت خرید ارز"
   [modal]="true"

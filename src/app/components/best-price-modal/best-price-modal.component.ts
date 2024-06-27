@@ -3,11 +3,12 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalculatorCoinExchangeService } from '../../core/services/calculator-coin-exchange.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-best-price-modal',
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule],
+  imports: [DialogModule, ButtonModule, InputTextModule, TooltipModule],
   templateUrl: './best-price-modal.component.html',
   styleUrl: './best-price-modal.component.scss',
 })

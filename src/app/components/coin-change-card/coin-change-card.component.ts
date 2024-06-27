@@ -13,6 +13,10 @@ import { CoinRateService } from '../../core/services/coin-rate.service';
 import { UpdatePriceComponent } from '../update-price/update-price.component';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { DividerModule } from 'primeng/divider';
+import { FieldsetModule } from 'primeng/fieldset';
+import { CurrencyPipe } from '@angular/common';
+
 // interface CoinRateExchange {
 //   coin: Coin;
 //   amount: number;
@@ -29,8 +33,11 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     BestPriceModalComponent,
     SelectButtonModule,
     UpdatePriceComponent,
+    DividerModule,
     InputGroupAddonModule,
-    InputGroupModule
+    InputGroupModule,
+    FieldsetModule,
+    CurrencyPipe,
   ],
   templateUrl: './coin-change-card.component.html',
   styleUrl: './coin-change-card.component.scss',

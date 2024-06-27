@@ -1,45 +1,60 @@
-<div>
-  <div class="flex align-items-center justify-content-between">
-    <div>
-      <img [src]="coin.image" alt="" width="24px" />
-
-      {{ coin.name }}
+<p-card>
+  <ng-template pTemplate="header">
+    <div
+      class="flex align-items-center justify-content-between w-full bg-primary-50 p-3"
+    >
+      <div class="flex align-items-center gap-2">
+        <img [src]="coin.image" alt="" width="24px" height="24px" />
+        {{ coin.name }}
+      </div>
+      <div class="flex gap-2">
+        <app-update-price [coin]="coin"></app-update-price>
+        <app-best-price-modal [id]="coin.id"></app-best-price-modal>
+      </div>
     </div>
-    <div>
-      <app-update-price [coin]="coin"></app-update-price>
-      <app-best-price-modal [id]="coin.id"></app-best-price-modal>
-    </div>
-  </div>
-  <hr />
-  <div class="flex align-items-center justify-content-between mb-5">
+  </ng-template>
+  <ng-template pTemplate="body">
     <div class="flex align-items-center justify-content-between">
-      <label for="">خرید</label>
-      <label for="">{{ coin.buyPrice }} </label>
+      <div class="flex align-items-center justify-content-between w-full">
+        <span class="inline-flex bg-green-100 border-round-sm py-1 px-2 gap-2">
+          <span>قیمت خرید </span>
+          <span
+            >{{ coin.buyPrice | currency : "IRR" : " " : "0.0-3" }} تومان</span
+          >
+        </span>
+        <span class="inline-flex bg-red-100 border-round-sm py-1 px-2 gap-2">
+          <span>قیمت فروش </span>
+          <span
+            >{{ coin.sellPrice | currency : "IRR" : " " : "0.0-3" }} تومان</span
+          >
+        </span>
+      </div>
     </div>
-    <div class="flex align-items-center justify-content-between">
-      <label for="">فروش</label>
-      <label for="">{{ coin.sellPrice }} </label>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="flex align-items-center justify-content-between mt-4">
+      <p-inputGroup dir="ltr">
+        <p-selectButton
+          styleClass="custom-select-button"
+          [options]="stateOptions"
+          [(ngModel)]="exchangeStatus"
+          (ngModelChange)="onExchangeStatusChange()"
+          optionLabel="label"
+          optionValue="value"
+        />
+        <p-inputGroupAddon>{{ coin.name }}</p-inputGroupAddon>
+        <input
+          dir="rtl"
+          style="width: 80px"
+          type="text"
+          pInputText
+          placeholder="مقدار"
+          [(ngModel)]="amount"
+          (ngModelChange)="onAmountChange()"
+        />
+        <p-inputGroupAddon>مقدار</p-inputGroupAddon>
+      </p-inputGroup>
+      <div class="centerinput" dir="ltr"></div>
     </div>
-  </div>
-  <div class="flex align-items-center justify-content-between mb-5">
-    <p-floatLabel>
-      <input
-        id="Amount"
-        type="text"
-        pInputText
-        [(ngModel)]="amount"
-        (ngModelChange)="onAmountChange()"
-      />
-      <label for="Amount">مقدار</label>
-    </p-floatLabel>
-    <div class="centerinput" dir="ltr">
-      <p-selectButton
-        [options]="stateOptions"
-        [(ngModel)]="exchangeStatus"
-        (ngModelChange)="onExchangeStatusChange()"
-        optionLabel="label"
-        optionValue="value"
-      />
-    </div>
-  </div>
-</div>
+  </ng-template>
+</p-card>
