@@ -1,0 +1,31 @@
+<br /><p-button (click)="toggleDialog()" label="بروزرسانی ریت" />
+<p-dialog
+  header="بروزرسانی ریت"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+>
+  <form [formGroup]="addCoinFormGroup" (ngSubmit)="onsubmit()">
+    <span class="p-text-secondary block mb-5">میزان ریت را وارد کنید</span>
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="username" class="font-semibold w-6rem">مقدار ریت</label>
+      <input
+        pInputText
+        id="username"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="rate"
+      />
+    </div>
+
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="image" class="font-semibold w-6rem">ایا ریت است؟</label>
+      <p-inputSwitch formControlName="israte" class="mr-8"  />
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button label="انصراف" severity="secondary" (click)="visible = false" />
+      <p-button label="تایید" type="submit" />
+    </div>
+  </form>
+</p-dialog>

@@ -10,6 +10,9 @@ import { Coin } from '../../core/models/coin.model';
 import { CoinRate } from '../../core/models/coin-rate.model';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CoinRateService } from '../../core/services/coin-rate.service';
+import { UpdatePriceComponent } from '../update-price/update-price.component';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 // interface CoinRateExchange {
 //   coin: Coin;
 //   amount: number;
@@ -25,23 +28,25 @@ import { CoinRateService } from '../../core/services/coin-rate.service';
     CardModule,
     BestPriceModalComponent,
     SelectButtonModule,
+    UpdatePriceComponent,
+    InputGroupAddonModule,
+    InputGroupModule
   ],
   templateUrl: './coin-change-card.component.html',
   styleUrl: './coin-change-card.component.scss',
 })
 export class CoinChangeCardComponent implements OnInit {
-  @Input({ alias: 'coin', required: true }) coin: Coin;
-  
-  amount: number = 1;
-  exchangeStatus: number = 0;
-  
+  @Input({ alias: 'coin', required: true }) coin: any;
+
+  amount: number;
+  exchangeStatus: number;
+
   @Output('onAmount') onAmount: EventEmitter<{}> = new EventEmitter<{}>();
   @Output('onExchangeStatus') onExchangeStatus: EventEmitter<{}> =
     new EventEmitter<{}>();
 
   constructor(
     private coinsService: CoinsService,
-    private coinRateService: CoinRateService,
     public readonly calculator: CalculatorCoinExchangeService
   ) {}
   coinsRate: CoinRate[] = [];
@@ -53,14 +58,19 @@ export class CoinChangeCardComponent implements OnInit {
   sellInput: number = 0;
   calcutebestpriceforthiscoin(e: any) {
     this.calculator.bestprice(e);
-    
   }
   ngOnInit() {
-
+    console.log(this.coin);
+    this.amount = this.coin.amount;
+    this.exchangeStatus = this.coin.exchangeStatus;
   }
 
   buyInputChenge() {
-    this.coinsService.update(this.coin.id, +this.coin.buyPrice, +this.coin.sellPrice);
+    this.coinsService.update(
+      this.coin.id,
+      this.coin.buyPrice,
+      this.coin.sellPrice
+    );
     // if (this.stateOptions) {
     //   for (let index = 0; index < this.coinsRate.length; index++) {
     //     if (this.coinsRate[index].fromCoin.id === this.coin.id) {
@@ -76,7 +86,11 @@ export class CoinChangeCardComponent implements OnInit {
     // }
   }
   sellInputChenge() {
-    this.coinsService.update(this.coin.id, +this.coin.buyPrice, +this.coin.sellPrice);
+    this.coinsService.update(
+      this.coin.id,
+      +this.coin.buyPrice,
+      this.coin.sellPrice
+    );
     // if (this.stateOptions) {
     //   for (let index = 0; index < this.coinsRate.length; index++) {
     //     if (this.coinsRate[index].fromCoin.id === e.id) {
@@ -93,10 +107,12 @@ export class CoinChangeCardComponent implements OnInit {
   }
 
   onAmountChange() {
-    this.onAmount.emit({amount:this.amount,coin: this.coin});
-
+    this.onAmount.emit({ amount: this.amount, coin: this.coin });
   }
-  onExchangeStatusChange(){
-    this.onExchangeStatus.emit({exchangeStatus:this.exchangeStatus,coin: this.coin })
+  onExchangeStatusChange() {
+    this.onExchangeStatus.emit({
+      exchangeStatus: this.exchangeStatus,
+      coin: this.coin,
+    });
   }
 }

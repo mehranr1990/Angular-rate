@@ -47,7 +47,6 @@ export class CoinTableRateExchangeComponent {
   coinsRate: CoinRate[] = [];
   constructor(
     private coinsService: CoinsService,
-    private coinRateService: CoinRateService,
     public readonly calculator: CalculatorCoinExchangeService,
     private observableCoinRate: getObservableCoinRate
   ) {}
@@ -64,6 +63,21 @@ export class CoinTableRateExchangeComponent {
     this.coinsService.coins.subscribe({
       next: (coins) => {
         this.coins = coins;
+        this.coinsCards = this.coins.map((coin: Coin,index:number) => {
+          if (this.coinsCards.length>1) {
+            return {
+              ...coin,
+              amount: this.coinsCards[index].amount,
+              exchangeStatus: this.coinsCards[index].exchangeStatus,
+            };
+          } else {
+            return {
+              ...coin,
+              amount: 1,
+              exchangeStatus: 0,
+            };
+          }
+        });
       },
     });
 
@@ -75,14 +89,6 @@ export class CoinTableRateExchangeComponent {
       },
     });
     // console.log(this.coinsRate);
-    
-    this.coinsCards = this.coins.map((coin: Coin) => {
-      return {
-        ...coin,
-        amount: 1,
-        exchangeStatus: 0,
-      };
-    });
   }
 
   changeAmount(payload: any) {

@@ -6,9 +6,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuardService } from './core/services/auth-guard.service';
 
 export const routes: Routes = [
-    {path:'',component:CoinsPageComponent},
+    {path:'',canActivate:[AuthGuardService],component:CoinsPageComponent},
     {path:'coins', canActivate:[AuthGuardService], component:CoinsPageComponent},
-    {path:'tableRate', component:CoinTableRateComponent},
-    {path:'tableRateExchange', component:CoinTableRateExchangeComponent},
+    {path:'tableRate',canActivate:[AuthGuardService], component:CoinTableRateComponent},
+    {path:'tableRateExchange', canActivate:[AuthGuardService],component:CoinTableRateExchangeComponent},
     {path:'login', component:LoginComponent},
  ];

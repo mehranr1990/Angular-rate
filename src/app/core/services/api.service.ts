@@ -24,7 +24,11 @@ export class ApiService {
   put<T>(endPoint:string, body:any){
     return this.http.put(this.baseURL + endPoint,body)
   }
-
+  
+  delete<T>(endPoint:string){
+    return this.http.delete(this.baseURL + endPoint)
+  }
+  
 
   // getCoinRateData(endPoint: string) {
   //   this.http.get(this.baseURL + endPoint).subscribe()

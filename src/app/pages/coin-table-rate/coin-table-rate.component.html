@@ -1,11 +1,16 @@
 <div class="p-8">
-  <p-table [value]="coinsRate" [tableStyle]="{ 'min-width': '50rem' }" [rowTrackBy]="trackById">
+  <p-table
+    [value]="coinsRate"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowTrackBy]="trackById"
+  >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:25%">ارز اول</th>
-        <th style="width:25%">ارز دوم</th>
-        <th style="width:25%">نرخ تبدیل</th>
-        <th style="width:25%">نرخ تبدیل ریت است؟</th>
+        <th style="width: 25%">ارز اول</th>
+        <th style="width: 25%">ارز دوم</th>
+        <th style="width: 25%">نرخ تبدیل</th>
+        <th style="width: 10%">نحوه ی تبدیل ؟</th>
+        <th style="width: 15%">ویرایش</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-coinRate>
@@ -21,7 +26,6 @@
             {{ coinRate.fromCoin.name }}
           </span>
         </td>
-
         <td>
           <span class="inline-flex align-items-center gap-2">
             <img
@@ -33,16 +37,15 @@
             {{ coinRate.toCoin.name }}
           </span>
         </td>
-
-        <td [pEditableColumn]="coinRate.rate" pEditableColumnField="rate">
+        <!-- <td [pEditableColumn]="coinRate.rate" pEditableColumnField="rate">
           <p-cellEditor>
             <ng-template pTemplate="input">
               <input
-              #rateInputRef
+                #rateInputRef
                 width="100%"
                 pInputText
                 [(ngModel)]="rateInput"
-                (focus)="onfocus($event,coinRate)"
+                (focus)="onfocus($event, coinRate)"
                 (keydown.enter)="onRateEdit(coinRate)"
                 (keydown.tab)="onRateEdit(coinRate)"
               />
@@ -51,12 +54,19 @@
               {{ coinRate.rate }}
             </ng-template>
           </p-cellEditor>
-        </td>
+        </td> -->
         <td>
-          <p-inputSwitch
-            [(ngModel)]="coinRate.isRate"
-            (ngModelChange)="onisRateEdit(coinRate)"
-          />
+          <span class="inline-flex align-items-center gap-2">
+            {{ coinRate.rate }}
+          </span>
+        </td>
+        @if (coinRate.isRate === 0) {
+        <td>ضریب تبدیل</td>
+        }@else {
+        <td>درصد تبدیل</td>
+        }
+        <td>
+          <app-update-rate [coinRate]="coinRate"></app-update-rate>
         </td>
       </tr>
     </ng-template>

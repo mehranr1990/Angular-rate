@@ -26,16 +26,16 @@ export class CalculatorCoinExchangeService {
       }
     }
   }
-  public calculateCoinprice(isRate: boolean, buyprice: number, rate: number) {
+  public calculateCoinprice(isRate: boolean, buyPrice: number, rate: number) {
     if (isRate) {
-      return Number((+buyprice / (1 + rate / 100)).toFixed(4)).toLocaleString(
+      return Number((+buyPrice / (1 + rate / 100)).toFixed(4)).toLocaleString(
         'en-US'
       );
     } else {
       if (+rate > 0) {
-        return Number((+buyprice / +rate).toFixed(4)).toLocaleString('en-US');
+        return Number((+buyPrice / +rate).toFixed(4)).toLocaleString('en-US');
       } else {
-        return Number((-1 * +buyprice * +rate).toFixed(4)).toLocaleString(
+        return Number((-1 * +buyPrice * +rate).toFixed(4)).toLocaleString(
           'en-US'
         );
       }
@@ -43,9 +43,9 @@ export class CalculatorCoinExchangeService {
   }
   public calculatepricedifference(
     isRate: boolean,
-    buyprice: number,
+    buyPrice: number,
     rate: number,
-    sellprice: number,
+    sellPrice: number,
     amount: number
   ) {
     if (isRate) {
@@ -73,18 +73,18 @@ export class CalculatorCoinExchangeService {
       }
     }
   }
-  public calculateCoinprice2(isRate: boolean, buyprice: number, rate: number) {
+  public calculateCoinprice2(isRate: boolean, buyPrice: number, rate: number) {
     if (isRate) {
       return Number(
-        ((1 / (1 + rate / 100)) * buyprice).toFixed(4)
+        ((1 / (1 + rate / 100)) * buyPrice).toFixed(4)
       ).toLocaleString('en-US');
     } else {
       if (+rate > 0) {
-        return Number(((1 / +rate) * buyprice).toFixed(4)).toLocaleString(
+        return Number(((1 / +rate) * buyPrice).toFixed(4)).toLocaleString(
           'en-US'
         );
       } else {
-        return Number((-1 * rate * buyprice).toFixed(4)).toLocaleString(
+        return Number((-1 * rate * buyPrice).toFixed(4)).toLocaleString(
           'en-US'
         );
       }
@@ -94,20 +94,20 @@ export class CalculatorCoinExchangeService {
     isRate: boolean,
     amount: number,
     rate: number,
-    buyprice: number
+    buyPrice: number
   ) {
     if (isRate) {
       return Number(
-        ((1 / (1 + rate / 100)) * amount * buyprice).toFixed(4)
+        ((1 / (1 + rate / 100)) * amount * buyPrice).toFixed(4)
       ).toLocaleString('en-US');
     } else {
       if (+rate > 0) {
         return Number(
-          ((1 / +rate) * amount * buyprice).toFixed(4)
+          ((1 / +rate) * amount * buyPrice).toFixed(4)
         ).toLocaleString('en-US');
       } else {
         return Number(
-          (-1 * rate * amount * buyprice).toFixed(4)
+          (-1 * rate * amount * buyPrice).toFixed(4)
         ).toLocaleString('en-US');
       }
     }
@@ -116,24 +116,24 @@ export class CalculatorCoinExchangeService {
     isRate: boolean,
     amount: number,
     rate: number,
-    buyprice: number,
-    sellprice: number
+    buyPrice: number,
+    sellPrice: number
   ) {
     if (isRate) {
       return Number(
         (
-          amount * sellprice -
-          (1 / (1 + rate / 100)) * amount * buyprice
+          amount * sellPrice -
+          (1 / (1 + rate / 100)) * amount * buyPrice
         ).toFixed(4)
       ).toLocaleString('en-US');
     } else {
       if (+rate > 0) {
         return Number(
-          (amount * sellprice - (1 / +rate) * amount * buyprice).toFixed(4)
+          (amount * sellPrice - (1 / +rate) * amount * buyPrice).toFixed(4)
         ).toLocaleString('en-US');
       } else {
         return Number(
-          (amount * sellprice - -1 * rate * amount * buyprice).toFixed(4)
+          (amount * sellPrice - -1 * rate * amount * buyPrice).toFixed(4)
         ).toLocaleString('en-US');
       }
     }
@@ -161,7 +161,7 @@ export class CalculatorCoinExchangeService {
         rateCoinArr.push({
           priceafter: Number(
             (1 / (1 + coinrate[index].rate / 100)) *
-              coinrate[index].fromCoin.buyprice
+              coinrate[index].fromCoin.buyPrice
           ),
           fullcoinRate: coinrate[index],
         });
@@ -169,14 +169,14 @@ export class CalculatorCoinExchangeService {
         if (coinrate[index].rate > 0) {
           rateCoinArr.push({
             priceafter: Number(
-              (1 / +coinrate[index].rate) * coinrate[index].fromCoin.buyprice
+              (1 / +coinrate[index].rate) * coinrate[index].fromCoin.buyPrice
             ),
             fullcoinRate: coinrate[index],
           });
         } else {
           rateCoinArr.push({
             priceafter: Number(
-              -1 * coinrate[index].rate * coinrate[index].fromCoin.buyprice
+              -1 * coinrate[index].rate * coinrate[index].fromCoin.buyPrice
             ),
             fullcoinRate: coinrate[index],
           });
@@ -185,7 +185,7 @@ export class CalculatorCoinExchangeService {
     }
     rateCoinArr.sort((a: any, b: any) => a.priceafter - b.priceafter);
     if (
-      rateCoinArr[0].priceafter < rateCoinArr[0].fullcoinRate.toCoin.buyprice
+      rateCoinArr[0].priceafter < rateCoinArr[0].fullcoinRate.toCoin.buyPrice
     ) {
       if (this.besstprice.length < rateCoinArr.length) {
         this.besstprice = [...this.besstprice, rateCoinArr[0]];

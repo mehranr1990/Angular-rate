@@ -1,9 +1,9 @@
 import { Coin } from './coin.model';
 
 export interface CoinRate {
-  id: string;
+  id: number;
   fromCoin: Coin | string;
   toCoin: Coin | string;
   rate: number;
-  isRate: boolean;
+  isRate: number;
 }

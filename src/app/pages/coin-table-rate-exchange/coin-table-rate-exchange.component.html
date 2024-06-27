@@ -48,8 +48,9 @@
             <img [src]="coin.image" [alt]="coin.name" width="24" class=""
           /></span>
         </td>
-        <td>{{ calculator.multiple(coin.buyprice, coin.amount) }} تومان</td>
-        <td>{{ calculator.multiple(coin.sellprice, coin.amount) }} تومان</td>
+        <td>{{ calculator.multiple(coin.buyPrice, coin.amount) }} تومان</td>
+        <td>{{ calculator.multiple(coin.sellPrice, coin.amount) }} تومان</td>
+        <td></td>
       </tr>
     </ng-template>
 
@@ -151,7 +152,7 @@
                             " : " +
                               calculator.calculateCoinprice(
                                 coinRate.isRate,
-                                coin.buyprice,
+                                coin.buyPrice,
 
                                 coinRate.rate
                               )
@@ -240,7 +241,7 @@
                             " : " +
                               calculator.calculateCoinprice2(
                                 coinRate.isRate,
-                                coinRate.fromCoin.buyprice,
+                                coinRate.fromCoin.buyPrice,
                                 coinRate.rate
                               )
                           }}
@@ -255,7 +256,7 @@
                         coinRate.isRate,
                         coin.amount,
                         coinRate.rate,
-                        coinRate.fromCoin.buyprice
+                        coinRate.fromCoin.buyPrice
                       )
                     }}</span>
                     <span class="inline-flex align-items-center gap-2">

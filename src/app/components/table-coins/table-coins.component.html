@@ -4,16 +4,18 @@
         <tr>
             <th style="width:25%">نام ارز</th>
             <th style="width:25%">نماد ارز</th>
-            <th style="width:25%">قیمت خرید</th>
-            <th style="width:25%">قیمت فروش</th>
+            <th style="width:20%">قیمت خرید</th>
+            <th style="width:20%">قیمت فروش</th>
+            <th style="width:10%">ویرایش</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
         <tr>
             <td>{{ product.name }}</td>
             <td><img [src]="product.image" [alt]="product.name" width="24"  /></td>
-            <td>{{ product.buyprice }}</td>
-            <td>{{ product.sellprice }}</td>
+            <td>{{ product.buyPrice }}</td>
+            <td>{{ product.sellPrice }}</td>
+            <td><p-button (onClick)="deleterow(product.id)">DELETE</p-button></td>
         </tr>
     </ng-template>
 </p-table></div>

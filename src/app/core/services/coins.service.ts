@@ -17,6 +17,13 @@ export class CoinsService {
     return this._coins;
   }
 
+
+  private _coinsData: BehaviorSubject<{coinId: string, amount: number, exchangeStatus: number}[]> = new BehaviorSubject<{coinId: string, amount: number, exchangeStatus: number}[]>([]);
+
+  public get coinsData(): Observable<{coinId: string, amount: number, exchangeStatus: number}[]> {
+    return this._coinsData;
+  }
+
   // public set isLogin(islogin: boolean) {
   //   this._isLogin.next(islogin);
   // }
@@ -37,8 +44,8 @@ export class CoinsService {
   public create(payload: CreateCoin) {
     const newCoin: Coin = {
       ...payload,
-      buyPrice: '0',
-      sellPrice: '0',
+      buyPrice: 0,
+      sellPrice: 0,
     };
     // await lastValueFrom(this.api.get(''));
 
@@ -62,17 +69,17 @@ export class CoinsService {
           buyPrice: resp.coin_BuyPrice,
           sellPrice: resp.coin_SellPrice,
         };
-      }),
-      tap({
-        next: (resp) =>
-          this.coinRateService
-            .addCoinToRateList(this._coins.getValue(), resp)
-            .subscribe({
-              next: (resp) => {
-                console.log(resp);
-              },
-            }),
       })
+      // tap({
+      //   next: (resp) =>
+      //     this.coinRateService
+      //       .addCoinToRateList(this._coins.getValue(), resp)
+      //       .subscribe({
+      //         next: (resp) => {
+      //           console.log(resp);
+      //         },
+      //       }),
+      // })
     );
   }
 
@@ -98,16 +105,29 @@ export class CoinsService {
     // this._coins.next(this.localStorageService.getCoins());
   }
 
-  public update(id: string, buyprice: number, sellprice: number) {
-    const selectedCoin: Coin | undefined = this._coins
-      .getValue()
-      .find((coin) => coin.id === id);
-    if (selectedCoin) {
-      selectedCoin.buyPrice = buyprice;
-      selectedCoin.sellPrice = sellprice;
-    }
-
-    return this.api.put('', this._coins.getValue());
+  public update(id: string, buyPrice: number, sellPrice: number) {
+    return this.api
+      .put(`coin/update/${id}`, { buyPrice: +buyPrice, sellPrice: +sellPrice })
+      .pipe(
+        tap({
+          next: (resp) => {
+            const selectedCoin: Coin | undefined = this._coins
+              .getValue()
+              .find((coin) => coin.id === id);
+            if (selectedCoin) {
+              selectedCoin.buyPrice = +buyPrice;
+              selectedCoin.sellPrice = +sellPrice;
+              
+              this._coins.next(this._coins.getValue());
+            }
+          },
+          error: (resp) => {},
+        })
+      );
     // this.localStorageService.UpdateCoin(this._coins.getValue());
+  }
+
+  deleteCoin(id:any){
+return this.api.delete(`coin/${id}`)
   }
 }

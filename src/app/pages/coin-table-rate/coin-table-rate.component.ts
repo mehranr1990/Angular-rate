@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { getObservableCoinRate } from '../../core/services/get-observable-coinRate';
+import { UpdateRateComponent } from '../../components/update-rate/update-rate.component';
 
 @Component({
   selector: 'app-coin-table-rate',
@@ -17,6 +18,7 @@ import { getObservableCoinRate } from '../../core/services/get-observable-coinRa
     FormsModule,
     InputTextModule,
     InputSwitchModule,
+    UpdateRateComponent
   ],
   templateUrl: './coin-table-rate.component.html',
   styleUrl: './coin-table-rate.component.scss',

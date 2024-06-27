@@ -3,7 +3,7 @@ import { CoinRate } from '../models/coin-rate.model';
 import { LocalstorageDBService } from './localstorage-db.service';
 import * as uuid from 'uuid';
 import { Coin } from '../models/coin.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -24,46 +24,67 @@ export class CoinRateService {
   ) {}
 
   public getAll() {
-    return this.api.get('coin-rate/find-all');
+    return this.api.get('coin-rate/find-all').pipe(
+      map((resp: any) => {
+        
+        return resp.map((res: any) => {
+          return {
+            id: res.Id,
+            fromCoin: res.coinrate_FromCoin,
+            toCoin: res.coinrate_ToCoin,
+            rate: res.coinrate_Rate,
+            isRate: res.coinrate_IsRate,
+          };
+        });
+      }),
+      tap({
+        next: (response) => {
+          this._coinRateList.next(response);
+        
+        },
+        
+        
+      })
+    );
     // this._coinRateList.next(this.localStorageService.getCoinrate1());
   }
-  addCoinToRateList(listcoin: Coin[], newCoin: Coin) {
-    let newRates: any = [];
-    this.getAll().subscribe({
-      next: (all) => {
-        newRates = all;
-      },
-    });
-    listcoin
-      .filter((coin) => newCoin.id !== coin.id)
-      .forEach((selectedCoin) => {
-        const rate1 = {
-          fromCoin: newCoin.id,
-          toCoin: selectedCoin.id,
-          rate: 0,
-          isRate: 1,
-        };
-        console.log(rate1);
-        
-        this.api.post('coin-rate', rate1);
-        newRates.push(rate1);
-        const rate2 = {
-          fromCoin: selectedCoin.id,
-          toCoin: newCoin.id,
-          rate: 0,
-          isRate: 1,
-        };
-        newRates.push(rate2);
-        this.api.post('coin-rate', rate2);
-      });
-    this._coinRateList.next(newRates);
-      for (let index = 0; index < newRates.length; index++) {
-        
-        return this.api.post('coin-rate', newRates[index]);
-      }
-    return this.api.post('', newRates);
-    // this.localStorageService.setCoinrate(newRates);
-  }
+  // addCoinToRateList(listcoin: Coin[], newCoin: Coin) {
+  //   let newRates: any = [];
+  //   this.getAll().subscribe({
+  //     next: (all) => {
+  //       newRates = all;
+  //     },
+  //   });
+  //   listcoin
+  //     .filter((coin) => newCoin.id !== coin.id)
+  //     .forEach((selectedCoin) => {
+  //       const rate1 = {
+  //         fromCoin: newCoin.id,
+  //         toCoin: selectedCoin.id,
+  //         rate: 0,
+  //         isRate: 1,
+  //       };
+  //       console.log(rate1);
+
+  //       this.api.post('coin-rate', rate1);
+  //       newRates.push(rate1);
+  //       const rate2 = {
+  //         fromCoin: selectedCoin.id,
+  //         toCoin: newCoin.id,
+  //         rate: 0,
+  //         isRate: 1,
+  //       };
+  //       newRates.push(rate2);
+  //       this.api.post('coin-rate', rate2);
+  //     });
+  //   this._coinRateList.next(newRates);
+  //     for (let index = 0; index < newRates.length; index++) {
+
+  //       return this.api.post('coin-rate', newRates[index]);
+  //     }
+  //   return this.api.post('', newRates);
+  //   // this.localStorageService.setCoinrate(newRates);
+  // }
   // public create() {
   //   let coins:Coin[] = []
   //   this.coinService.getAll();
@@ -125,16 +146,18 @@ export class CoinRateService {
   //   this.localStorageService.setCoinrate1(this._coinRateList.getValue());
   // }
 
-  public update(id: string, rate: number, isRate: boolean) {
+  public update(id: number, rate: number, isRate: number) {
     const selectedCoinRate = this._coinRateList
       .getValue()
-      .find((coinrate) => coinrate.id === id)!;
+      .find((coinrate) => +coinrate.id === id)!;
     // console.log(selectedCoinRate);
     selectedCoinRate.rate = rate;
     selectedCoinRate.isRate = isRate;
     // this.localStorageService.setCoinrate(this._coinRateList.getValue());
     this._coinRateList.next(this._coinRateList.getValue());
-    return this.api.put('coin-rate/update', this._coinRateList.getValue);
+    return this.api.put(`coin-rate/update/${id}`, { "rate": +rate,
+      "isRate": +isRate
+    });
     // return selectedCoinRate;
   }
 }

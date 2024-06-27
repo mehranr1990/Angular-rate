@@ -1,6 +1,6 @@
-<!-- @if(isLogin){ -->
+@if(authService.islogin){
     <div class="card">
     <p-menubar [model]="items" />
 </div>
-<!-- } -->
+}
 <router-outlet></router-outlet>

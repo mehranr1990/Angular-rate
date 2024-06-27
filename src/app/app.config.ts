@@ -1,4 +1,5 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
   provideZoneChangeDetection,
@@ -21,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     // provideHttpClient(withInterceptorsFromDi()),
     { provide: ApiService, useFactory: HttpClientCreator, deps: [HttpClient] },
     { provide: HTTP_INTERCEPTORS, useClass: jwtInterceptor, multi:true },
+    // { provide: APP_INITIALIZER, useFactory: , multi:true },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),

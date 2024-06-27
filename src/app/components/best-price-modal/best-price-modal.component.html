@@ -1,8 +1,8 @@
-<p-button
+<i
+  class="pi pi-star-fill"
+  style="color: 'var(--primary-color)'"
   (click)="showDialog('top')"
-  label="بهترین حالت خرید"
-  severity="secondary"
-/>
+></i>
 <p-dialog
   header="بهترین حالت خرید ارز"
   [modal]="true"
@@ -10,22 +10,19 @@
   position="center"
   [style]="{ width: '35rem' }"
 >
-@if(array.length<1){
+  @if(array.length<1){
   <div class="flex align-items-center gap-3 mb-3 width">
     <div class="center">
       <span>بهترین حالت خرید خود ارز است</span>
     </div>
 
-
-
     <!-- <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span> -->
   </div>
-  
+
   <div class="flex justify-content-end gap-2">
     <p-button label="تایید" (click)="visible = false" />
   </div>
-}@else {
-  @for (item of array; track $index) {
+  }@else { @for (item of array; track $index) {
   <div class="flex align-items-center gap-3 mb-3 width">
     <div class="center">
       <span class="center1">{{ item.fullcoinRate.fromCoin.name }}</span>
@@ -46,15 +43,20 @@
         />
       </span>
     </div>
-<span>{{item.priceafter.toFixed(4)}}</span>
-<span>میزان سود {{(+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4)}} تومان</span>
-
-
+    <span>{{ item.priceafter.toFixed(4) }}</span>
+    <span
+      >میزان سود
+      {{
+        (+item.fullcoinRate.toCoin.buyPrice - +item.priceafter).toFixed(4)
+      }}
+      تومان</span
+    >
 
     <!-- <span class="p-text-secondary block mb-5">{{'قیمت '+ item.fullcoinRate.toCoin.name + ' بر حسب ' + item.fullcoinRate.fromCoin.name + item.priceafter + 'میزان سود'+((+item.fullcoinRate.toCoin.buyprice-+item.priceafter).toFixed(4) )}}  </span> -->
   </div>
   }
   <div class="flex justify-content-end gap-2">
     <p-button label="تایید" (click)="visible = false" />
-  </div>}
+  </div>
+  }
 </p-dialog>
