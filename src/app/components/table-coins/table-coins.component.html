@@ -1,21 +1,42 @@
 <div class="mt-3">
-<p-table  [value]="coins" [tableStyle]="{ 'min-width': '50rem' }">
+  <p-table [value]="coins" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
-        <tr>
-            <th style="width:25%">نام ارز</th>
-            <th style="width:25%">نماد ارز</th>
-            <th style="width:20%">قیمت خرید</th>
-            <th style="width:20%">قیمت فروش</th>
-            <th style="width:10%">ویرایش</th>
-        </tr>
+      <tr>
+        <th style="width: 25%">نام ارز</th>
+        <th style="width: 25%">نماد ارز</th>
+        <th style="width: 20%">قیمت خرید</th>
+        <th style="width: 20%">قیمت فروش</th>
+        <th style="width: 10%">ویرایش</th>
+      </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
-        <tr>
-            <td>{{ product.name }}</td>
-            <td><img [src]="product.image" [alt]="product.name" width="24"  /></td>
-            <td>{{ product.buyPrice }}</td>
-            <td>{{ product.sellPrice }}</td>
-            <td><p-button (onClick)="deleterow(product.id)">DELETE</p-button></td>
-        </tr>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td><img [src]="product.image" [alt]="product.name" width="24" /></td>
+        <td>{{ product.buyPrice }}</td>
+        <td>{{ product.sellPrice }}</td>
+        <td><p-button (onClick)="toggleDialog(product)">حذف کردن</p-button></td>
+      </tr>
     </ng-template>
-</p-table></div>
+  </p-table>
+</div>
+
+<p-dialog
+  header="حذف ارز"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+>
+  <span class="p-text-secondary block mb-5"
+    >این عملیات ارز شما و تمامی ریت های آن را حذف خواهد کرد</span
+  >
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="username" class="font-semibold"
+      >شما در حال حذف ارز {{ selectedCoin.name }} هستید</label
+    >
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="انصراف" severity="secondary" (click)="visible = false" />
+    <p-button label="تایید" (onClick)="deleterow()" />
+  </div>
+</p-dialog>
