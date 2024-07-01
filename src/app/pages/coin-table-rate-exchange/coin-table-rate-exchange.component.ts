@@ -5,7 +5,7 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { Coin } from '../../core/models/coin.model';
 import { CoinsService } from '../../core/services/coins.service';
-import { CoinRate } from '../../core/models/coin-rate.model';
+import { CoinRate, CoinRateCoin } from '../../core/models/coin-rate.model';
 import { CoinRateService } from '../../core/services/coin-rate.service';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,7 +44,7 @@ import { getObservableCoinRate } from '../../core/services/get-observable-coinRa
 export class CoinTableRateExchangeComponent {
   coinsCards: any[] = [];
   coins: Coin[] = [];
-  coinsRate: CoinRate[] = [];
+  coinsRate: CoinRateCoin[] = [];
   constructor(
     private coinsService: CoinsService,
     public readonly calculator: CalculatorCoinExchangeService,

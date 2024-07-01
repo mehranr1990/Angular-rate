@@ -7,3 +7,10 @@ export interface CoinRate {
   rate: number;
   isRate: number;
 }
+export interface CoinRateCoin{
+  id: number;
+  fromCoin: Coin ;
+  toCoin: Coin ;
+  rate: number;
+  isRate: number;
+}

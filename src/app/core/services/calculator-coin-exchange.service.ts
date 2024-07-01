@@ -11,7 +11,7 @@ export class CalculatorCoinExchangeService {
     private observableCoinRate: getObservableCoinRate
   ) {}
   private besstprice: any = [];
-  public calculateCoinToCoin(isRate: boolean, amount: number, rate: number) {
+  public calculateCoinToCoin(isRate: number, amount: number, rate: number) {
     if (isRate) {
       return Number(
         (+amount + (+rate / 100) * +amount).toFixed(4)
@@ -26,7 +26,7 @@ export class CalculatorCoinExchangeService {
       }
     }
   }
-  public calculateCoinprice(isRate: boolean, buyPrice: number, rate: number) {
+  public calculateCoinprice(isRate: number, buyPrice: number, rate: number) {
     if (isRate) {
       return Number((+buyPrice / (1 + rate / 100)).toFixed(4)).toLocaleString(
         'en-US'
@@ -42,7 +42,7 @@ export class CalculatorCoinExchangeService {
     }
   }
   public calculatepricedifference(
-    isRate: boolean,
+    isRate: number,
     buyPrice: number,
     rate: number,
     sellPrice: number,
@@ -58,7 +58,7 @@ export class CalculatorCoinExchangeService {
       }
     }
   }
-  public calculateGivetoGet(isRate: boolean, amount: number, rate: number) {
+  public calculateGivetoGet(isRate: number, amount: number, rate: number) {
     if (isRate) {
       return Number(
         ((1 / (1 + rate / 100)) * amount).toFixed(4)
@@ -73,7 +73,7 @@ export class CalculatorCoinExchangeService {
       }
     }
   }
-  public calculateCoinprice2(isRate: boolean, buyPrice: number, rate: number) {
+  public calculateCoinprice2(isRate: number, buyPrice: number, rate: number) {
     if (isRate) {
       return Number(
         ((1 / (1 + rate / 100)) * buyPrice).toFixed(4)
@@ -91,7 +91,7 @@ export class CalculatorCoinExchangeService {
     }
   }
   public calculatesellbuyprice(
-    isRate: boolean,
+    isRate: number,
     amount: number,
     rate: number,
     buyPrice: number
@@ -113,7 +113,7 @@ export class CalculatorCoinExchangeService {
     }
   }
   public calculateprofitofselleng(
-    isRate: boolean,
+    isRate: number,
     amount: number,
     rate: number,
     buyPrice: number,
